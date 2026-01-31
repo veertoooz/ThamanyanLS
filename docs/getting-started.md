@@ -3,24 +3,24 @@
 ## Installation
 
 ```bash
-npm install tamanyan.css
+npm install thamanyanls
 ```
 
 **In HTML:**
 
 ```html
-<link rel="stylesheet" href="node_modules/tamanyan.css/dist/tamanyan.css">
+<link rel="stylesheet" href="node_modules/thamanyanls/dist/thamanyan.css">
 ```
 
 **With a bundler:**
 
 ```js
-import 'tamanyan.css';
+import 'thamanyanls';
 ```
 
-You can also copy `dist/tamanyan.css` into your project and link it directly.
+You can also copy `dist/thamanyan.css` into your project and link it directly.
 
-**Optional script (unlimited depth):** For automatic nesting level on all `.t-layout` elements, add `<script src=".../dist/tamanyan.js"></script>` after the CSS. Without it, only the root has level 1; you can override `--t-level` manually per layout.
+**Optional script (unlimited depth):** For automatic nesting level on all `.t-layout` elements, add `<script src=".../dist/thamanyan.js"></script>` after the CSS. Without it, only the root has level 1; you can override `--t-level` manually per layout.
 
 ---
 

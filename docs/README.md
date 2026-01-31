@@ -1,4 +1,4 @@
-# tamanyan.CSS — Documentation
+# ThamanyanLS — Documentation
 
 Context-aware layout system for deep interfaces. Layout should reflect structure, not the designer's memory.
 
@@ -14,9 +14,9 @@ Context-aware layout system for deep interfaces. Layout should reflect structure
 
 ---
 
-## What is tamanyan.CSS
+## What is ThamanyanLS
 
-tamanyan.CSS is a **CSS-only** layout system that:
+ThamanyanLS is a **CSS-only** layout system that:
 
 - Computes **gap** and **padding** from layout nesting depth (no JavaScript).
 - Uses **flexbox** with explicit direction (`row` or `column`).

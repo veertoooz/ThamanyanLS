@@ -1,6 +1,6 @@
 /**
- * tamanyan.CSS — Context-aware layout system for deep interfaces
- * https://github.com/.../tamanyan.css
+ * ThamanyanLS (Layout System) — Context-aware layout system for deep interfaces
+ * https://github.com/.../ThamanyanLS
  * Layout spacing follows nesting level. Optional JS for automatic level (unlimited depth). Framework-agnostic.
  */
 
@@ -26,7 +26,7 @@
   flex-direction: row;
 }
 
-/* Nested level: set by optional tamanyan.js for unlimited depth; without script, only root has level 1 (or override --t-level manually). */
+/* Nested level: set by optional thamanyan.js for unlimited depth; without script, only root has level 1 (or override --t-level manually). */
 
 .t-layout[data-manual] {
   gap: unset;

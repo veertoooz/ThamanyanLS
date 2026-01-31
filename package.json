@@ -1,15 +1,15 @@
 {
-  "name": "tamanyan.css",
+  "name": "thamanyanls",
   "version": "0.1.0",
   "description": "Context-aware layout system for deep interfaces",
-  "main": "dist/tamanyan.css",
-  "style": "dist/tamanyan.css",
-  "unpkg": "dist/tamanyan.js",
+  "main": "dist/thamanyan.css",
+  "style": "dist/thamanyan.css",
+  "unpkg": "dist/thamanyan.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "node -e \"const fs=require('fs'); fs.mkdirSync('dist',{recursive:true}); fs.copyFileSync('src/tamanyan.css','dist/tamanyan.css'); fs.copyFileSync('src/tamanyan.js','dist/tamanyan.js');\"",
+    "build": "node -e \"const fs=require('fs'); fs.mkdirSync('dist',{recursive:true}); fs.copyFileSync('src/thamanyan.css','dist/thamanyan.css'); fs.copyFileSync('src/thamanyan.js','dist/thamanyan.js');\"",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -22,11 +22,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/veertoooz/TamanyanCSS.git"
+    "url": "https://github.com/veertoooz/ThamanyanLS.git"
   },
-  "homepage": "https://github.com/veertoooz/TamanyanCSS#readme",
+  "homepage": "https://github.com/veertoooz/ThamanyanLS#readme",
   "bugs": {
-    "url": "https://github.com/veertoooz/TamanyanCSS/issues"
+    "url": "https://github.com/veertoooz/ThamanyanLS/issues"
   },
   "author": "veertoooz"
 }

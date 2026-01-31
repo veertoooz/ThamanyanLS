@@ -12,7 +12,7 @@ Complete list of classes, CSS variables, and data attributes.
 | `t-layout column` | `flex-direction: column`. |
 | `t-layout row` | `flex-direction: row`. |
 
-**Nesting:** Level is set by the optional `tamanyan.js` script (unlimited depth). Each `.t-layout` gets `--t-level` equal to its nesting depth; gap and padding are computed from that. Without the script, only the root has level 1—override `--t-level` manually on nested layouts if needed.
+**Nesting:** Level is set by the optional `thamanyan.js` script (unlimited depth). Each `.t-layout` gets `--t-level` equal to its nesting depth; gap and padding are computed from that. Without the script, only the root has level 1—override `--t-level` manually on nested layouts if needed.
 
 ---
 

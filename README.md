@@ -1,4 +1,4 @@
-# tamanyan.CSS
+# ThamanyanLS
 
 **Context-aware layout system for deep interfaces**
 
@@ -6,13 +6,13 @@ Layout should reflect structure, not the designer's memory.
 
 ---
 
-## What is tamanyan.CSS
+## What is ThamanyanLS
 
-tamanyan.CSS is a CSS layout system that automatically computes **gap** and **padding** from layout nesting depth.
+ThamanyanLS is a CSS layout system that automatically computes **gap** and **padding** from layout nesting depth.
 
 It is intended for interfaces where layouts are deep, multi-layered, and structural—and where manual spacing leads to chaos.
 
-tamanyan.CSS is not a framework and not a UI library.  
+ThamanyanLS is not a framework and not a UI library.  
 It is layout logic: minimal, predictable, and framework-agnostic.
 
 ---
@@ -26,13 +26,13 @@ In modern UIs we often see:
 - Inconsistent space between components
 - Layout rules that are hard to maintain
 
-tamanyan.CSS fixes this by **tying spacing to logical layout depth**.
+ThamanyanLS fixes this by **tying spacing to logical layout depth**.
 
 ---
 
 ## Core idea
 
-tamanyan.CSS treats layout as a **tree**.
+ThamanyanLS treats layout as a **tree**.
 
 Each layout node has:
 
@@ -55,7 +55,7 @@ Spacing is computed automatically using **CSS Custom Properties** only.
 
 ---
 
-## What tamanyan.CSS does
+## What ThamanyanLS does
 
 - Uses flex layout
 - Calculates gap automatically
@@ -74,7 +74,7 @@ Spacing is computed automatically using **CSS Custom Properties** only.
 - Does not replace Tailwind or daisyUI
 - Does not enforce design decisions
 
-tamanyan.CSS deals only with **layout logic**.
+ThamanyanLS deals only with **layout logic**.
 
 ---
 
@@ -91,19 +91,19 @@ This is a deliberate constraint.
 ## Installation
 
 ```bash
-npm install tamanyan.css
+npm install thamanyanls
 ```
 
 Then in your app:
 
 ```html
-<link rel="stylesheet" href="node_modules/tamanyan.css/dist/tamanyan.css">
+<link rel="stylesheet" href="node_modules/thamanyanls/dist/thamanyan.css">
 ```
 
 For automatic level (unlimited depth), add the optional script after the CSS:
 
 ```html
-<script src="node_modules/tamanyan.css/dist/tamanyan.js"></script>
+<script src="node_modules/thamanyanls/dist/thamanyan.js"></script>
 ```
 
 Without the script, only the root layout has level 1; nested layouts need manual `--t-level` override or the script.
@@ -111,10 +111,10 @@ Without the script, only the root layout has level 1; nested layouts need manual
 Or with a bundler:
 
 ```js
-import 'tamanyan.css';
+import 'thamanyanls';
 ```
 
-You can also copy `dist/tamanyan.css` into your project.
+You can also copy `dist/thamanyan.css` into your project.
 
 **Documentation:** See the [docs](docs/README.md) folder for full documentation (getting started, reference, examples).
 
@@ -176,7 +176,7 @@ CSS inheritance does the rest.
 
 ## Tailwind & daisyUI integration
 
-tamanyan.CSS is designed to work with:
+ThamanyanLS is designed to work with:
 
 - Next.js
 - Tailwind CSS
@@ -186,7 +186,7 @@ tamanyan.CSS is designed to work with:
 
 - Tailwind → utilities
 - daisyUI → component look
-- tamanyan.CSS → layout structure
+- ThamanyanLS → layout structure
 
 They do not conflict.
 
@@ -285,7 +285,7 @@ Layout uses `justify-content` and `align-items`. Set via CSS variables `--t-just
 
 ---
 
-## When to use tamanyan.CSS
+## When to use ThamanyanLS
 
 - Deep dashboards
 - Nested editors
@@ -295,7 +295,7 @@ Layout uses `justify-content` and `align-items`. Set via CSS variables `--t-just
 
 ---
 
-## Why "tamanyan"
+## Why ThamanyanLS
 
 The name is inspired by architectural thinking:
 
@@ -303,7 +303,7 @@ The name is inspired by architectural thinking:
 - Form follows structure
 - Space is governed by rules
 
-tamanyan.CSS treats CSS not as decoration, but as **architecture**.
+ThamanyanLS treats CSS not as decoration, but as **architecture**.
 
 ---
 
@@ -311,7 +311,7 @@ tamanyan.CSS treats CSS not as decoration, but as **architecture**.
 
 UI should not only look good—it should make sense spatially.
 
-tamanyan.CSS turns spacing into a reflection of information hierarchy.
+ThamanyanLS turns spacing into a reflection of information hierarchy.
 
 ---
 

@@ -1,6 +1,6 @@
 /**
- * tamanyan.CSS — optional script for automatic layout level (unlimited depth)
- * https://github.com/veertoooz/TamanyanCSS
+ * ThamanyanLS — optional script for automatic layout level (unlimited depth)
+ * https://github.com/veertoooz/ThamanyanLS
  * Run after DOM ready; sets --t-level on each .t-layout by nesting depth.
  */
 (function () {
