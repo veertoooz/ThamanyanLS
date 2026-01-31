@@ -4,11 +4,12 @@
   "description": "Context-aware layout system for deep interfaces",
   "main": "dist/tamanyan.css",
   "style": "dist/tamanyan.css",
+  "unpkg": "dist/tamanyan.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "node -e \"const fs=require('fs'); fs.mkdirSync('dist',{recursive:true}); fs.copyFileSync('src/tamanyan.css','dist/tamanyan.css');\"",
+    "build": "node -e \"const fs=require('fs'); fs.mkdirSync('dist',{recursive:true}); fs.copyFileSync('src/tamanyan.css','dist/tamanyan.css'); fs.copyFileSync('src/tamanyan.js','dist/tamanyan.js');\"",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

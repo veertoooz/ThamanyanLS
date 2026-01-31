@@ -62,6 +62,20 @@ Open in a browser and resize to see rows stack on narrow viewport; use print pre
 
 ---
 
+## Tailwind + daisyUI example
+
+Same layout idea (app shell, sidebar + content, stats, cards) but **layout from tamanyan.CSS** and **look from Tailwind CSS + daisyUI**. Spacing and nesting are handled by tamanyan; colors, components (btn, card, stats, menu, badge), and theme come from Tailwind and daisyUI.
+
+**Load order:** Tailwind (script) → daisyUI (full.min.css) → tamanyan.css. Tamanyan is loaded last so its layout rules (flex, gap, padding) win.
+
+**Features:** `t-layout-responsive`, `t-layout-grow`, `t-layout-shrink-0`, `t-layout-wrap`, `t-layout-justify-between`; daisyUI theme (`data-theme="cupcake"`), navbar area, menu, stats, cards, buttons.
+
+**File:** [../examples/tailwind-daisyui.html](../examples/tailwind-daisyui.html)
+
+Open in a browser (CDN works; no build). Resize to see responsive stacking.
+
+---
+
 ## Snippets
 
 **Sidebar + main (grow/shrink):**

@@ -20,6 +20,8 @@ import 'tamanyan.css';
 
 You can also copy `dist/tamanyan.css` into your project and link it directly.
 
+**Optional script (unlimited depth):** For automatic nesting level on all `.t-layout` elements, add `<script src=".../dist/tamanyan.js"></script>` after the CSS. Without it, only the root has level 1; you can override `--t-level` manually per layout.
+
 ---
 
 ## First layout

@@ -1,7 +1,7 @@
 /**
  * tamanyan.CSS — Context-aware layout system for deep interfaces
  * https://github.com/.../tamanyan.css
- * Layout spacing follows nesting level. Zero JS. Framework-agnostic.
+ * Layout spacing follows nesting level. Optional JS for automatic level (unlimited depth). Framework-agnostic.
  */
 
 .t-layout {
@@ -26,9 +26,7 @@
   flex-direction: row;
 }
 
-.t-layout > .t-layout {
-  --t-level: calc(var(--t-level) + 1);
-}
+/* Nested level: set by optional tamanyan.js for unlimited depth; without script, only root has level 1 (or override --t-level manually). */
 
 .t-layout[data-manual] {
   gap: unset;

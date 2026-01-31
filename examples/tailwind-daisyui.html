@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tamanyan.CSS + Tailwind + daisyUI</title>
+  <!-- Load order: Tailwind → daisyUI → tamanyan (layout last so it wins) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.24/dist/full.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../dist/tamanyan.css">
+  <script src="../dist/tamanyan.js"></script>
+</head>
+<body class="min-h-screen">
+  <!-- Layout: 100% tamanyan. Look: Tailwind + daisyUI. -->
+  <div class="t-layout column t-layout-responsive" style="min-height: 100vh;">
+    <!-- Header: tamanyan row + daisyUI navbar/btns -->
+    <header class="t-layout row t-layout-justify-between t-layout-align-center bg-base-200">
+      <div class="t-layout row t-layout-align-center">
+        <h1 class="text-xl font-bold">tamanyan + Tailwind + daisyUI</h1>
+        <span class="badge badge-ghost ml-2">Level 1</span>
+      </div>
+      <div class="t-layout row t-layout-wrap t-layout-align-center gap-2">
+        <a href="#" class="link link-hover">Docs</a>
+        <a href="#" class="link link-hover">API</a>
+        <button class="btn btn-primary btn-sm">New</button>
+      </div>
+    </header>
+
+    <!-- Main: tamanyan row = sidebar + content -->
+    <div class="t-layout row t-layout-grow" style="min-height: 0;">
+      <!-- Sidebar: tamanyan column, daisyUI menu -->
+      <aside class="t-layout column t-layout-shrink-0 w-56 bg-base-200">
+        <ul class="menu p-2">
+          <li class="menu-title">Main</li>
+          <li><a>Overview</a></li>
+          <li><a>Projects</a></li>
+          <li><a>Settings</a></li>
+          <li class="menu-title">Level 2</li>
+          <li><a>Templates</a></li>
+          <li><a>Integrations</a></li>
+        </ul>
+      </aside>
+
+      <!-- Content: tamanyan column, daisyUI stats + cards -->
+      <div class="t-layout column t-layout-grow p-4">
+        <div class="t-layout row t-layout-justify-between t-layout-align-center mb-2">
+          <span class="text-sm opacity-70">Home / Dashboard</span>
+        </div>
+        <!-- Stats: tamanyan row wrap, daisyUI stats -->
+        <div class="t-layout row t-layout-wrap">
+          <div class="stats shadow t-layout-grow min-w-0">
+            <div class="stat">
+              <div class="stat-title">Views</div>
+              <div class="stat-value">1,234</div>
+            </div>
+          </div>
+          <div class="stats shadow t-layout-grow min-w-0">
+            <div class="stat">
+              <div class="stat-title">Visitors</div>
+              <div class="stat-value">567</div>
+            </div>
+          </div>
+          <div class="stats shadow t-layout-grow min-w-0">
+            <div class="stat">
+              <div class="stat-title">Conversion</div>
+              <div class="stat-value">89%</div>
+            </div>
+          </div>
+        </div>
+        <!-- Cards: tamanyan row wrap, daisyUI card -->
+        <div class="t-layout row t-layout-wrap mt-4">
+          <div class="t-layout column t-layout-grow card bg-base-100 shadow-xl min-w-72">
+            <div class="card-body">
+              <h2 class="card-title">Card A</h2>
+              <p class="text-sm opacity-70">Layout from tamanyan, style from daisyUI.</p>
+              <div class="card-actions justify-end">
+                <button class="btn btn-primary btn-sm">Action</button>
+              </div>
+            </div>
+          </div>
+          <div class="t-layout column t-layout-grow card bg-base-100 shadow-xl min-w-72">
+            <div class="card-body">
+              <h2 class="card-title">Card B</h2>
+              <p class="text-sm opacity-70">Spacing follows nesting depth.</p>
+              <div class="card-actions justify-end">
+                <button class="btn btn-outline btn-sm">Outline</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

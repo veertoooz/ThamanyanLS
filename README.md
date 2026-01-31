@@ -60,8 +60,8 @@ Spacing is computed automatically using **CSS Custom Properties** only.
 - Uses flex layout
 - Calculates gap automatically
 - Calculates padding automatically
-- Works with infinite nesting
-- Zero JavaScript at runtime
+- Works with infinite nesting (optional JS for automatic level)
+- Optional JavaScript for automatic level (unlimited depth); without script, only root has level 1 or override `--t-level` manually
 - Framework-agnostic
 - Works alongside Tailwind and daisyUI
 
@@ -99,6 +99,14 @@ Then in your app:
 ```html
 <link rel="stylesheet" href="node_modules/tamanyan.css/dist/tamanyan.css">
 ```
+
+For automatic level (unlimited depth), add the optional script after the CSS:
+
+```html
+<script src="node_modules/tamanyan.css/dist/tamanyan.js"></script>
+```
+
+Without the script, only the root layout has level 1; nested layouts need manual `--t-level` override or the script.
 
 Or with a bundler:
 
