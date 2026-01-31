@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tamanyan.CSS — Basic example</title>
+  <link rel="stylesheet" href="../dist/tamanyan.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, sans-serif; color: #333; }
+    .t-layout { border: 1px dashed rgba(0,0,0,.15); min-height: 1.5rem; }
+    .t-layout .t-layout { background: rgba(0,0,0,.02); }
+    header, aside, .card, .stat { background: #f8f9fa; border-radius: 6px; padding: 0.5rem 0.75rem; }
+    .stat { text-align: center; }
+    .stat strong { display: block; font-size: 1.25rem; }
+    h1, h2, h3 { margin: 0; font-weight: 600; }
+    .muted { color: #666; font-size: 0.9rem; }
+    @media (max-width: 48rem) {
+      .t-layout aside { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Level 1: app shell column (t-layout-responsive = rows stack on narrow viewport) -->
+  <div class="t-layout column t-layout-responsive">
+    <header class="t-layout row t-layout-justify-between">
+      <h1>Dashboard</h1>
+      <span class="muted">Level 1 — gap 1rem</span>
+    </header>
+
+    <!-- Level 2: main row (sidebar + content) -->
+    <div class="t-layout row" style="min-height: 60vh;">
+      <aside class="t-layout column t-layout-shrink-0" style="min-width: min(12rem, 100%);">
+        <a href="#">Nav A</a>
+        <a href="#">Nav B</a>
+        <a href="#">Nav C</a>
+        <span class="muted">Level 2</span>
+      </aside>
+
+      <!-- Level 3: main content column -->
+      <div class="t-layout column t-layout-grow">
+        <!-- Level 4: stats row -->
+        <div class="t-layout row t-layout-wrap">
+          <div class="stat"> <strong>42</strong> <span class="muted">Items</span> </div>
+          <div class="stat"> <strong>7</strong> <span class="muted">Active</span> </div>
+          <div class="stat"> <strong>99%</strong> <span class="muted">Health</span> </div>
+        </div>
+
+        <!-- Level 4: content block -->
+        <div class="t-layout column">
+          <h2>Section title</h2>
+          <!-- Level 5: card row -->
+          <div class="t-layout row">
+            <div class="t-layout column card t-layout-grow">
+              <h3>Card A</h3>
+              <p class="muted">Level 5 — tightest spacing.</p>
+            </div>
+            <div class="t-layout column card t-layout-grow">
+              <h3>Card B</h3>
+              <p class="muted">Same depth, same gap.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

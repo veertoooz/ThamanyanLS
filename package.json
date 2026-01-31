@@ -1,0 +1,31 @@
+{
+  "name": "tamanyan.css",
+  "version": "0.1.0",
+  "description": "Context-aware layout system for deep interfaces",
+  "main": "dist/tamanyan.css",
+  "style": "dist/tamanyan.css",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node -e \"const fs=require('fs'); fs.mkdirSync('dist',{recursive:true}); fs.copyFileSync('src/tamanyan.css','dist/tamanyan.css');\"",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "css",
+    "layout",
+    "flexbox",
+    "spacing",
+    "nested"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/veertoooz/TamanyanCSS.git"
+  },
+  "homepage": "https://github.com/veertoooz/TamanyanCSS#readme",
+  "bugs": {
+    "url": "https://github.com/veertoooz/TamanyanCSS/issues"
+  },
+  "author": "veertoooz"
+}

@@ -1,0 +1,105 @@
+/**
+ * tamanyan.CSS — Context-aware layout system for deep interfaces
+ * https://github.com/.../tamanyan.css
+ * Layout spacing follows nesting level. Zero JS. Framework-agnostic.
+ */
+
+.t-layout {
+  --t-level: 1;
+  --t-base: 1rem;
+  --t-gap: clamp(var(--t-gap-min, 0.25rem), calc(var(--t-base) / var(--t-level)), var(--t-gap-max, 1rem));
+  --t-justify: flex-start;
+  --t-align: stretch;
+
+  display: flex;
+  gap: var(--t-gap);
+  padding: var(--t-gap);
+  justify-content: var(--t-justify);
+  align-items: var(--t-align);
+}
+
+.t-layout.column {
+  flex-direction: column;
+}
+
+.t-layout.row {
+  flex-direction: row;
+}
+
+.t-layout > .t-layout {
+  --t-level: calc(var(--t-level) + 1);
+}
+
+.t-layout[data-manual] {
+  gap: unset;
+  padding: unset;
+}
+
+/* Grow / shrink (use with .t-layout on same element) */
+.t-layout.t-layout-grow {
+  flex: 1;
+}
+.t-layout.t-layout-shrink-0 {
+  flex-shrink: 0;
+}
+
+/* Wrap (use with .t-layout.row) */
+.t-layout-wrap {
+  flex-wrap: wrap;
+}
+
+/* Alignment (set --t-justify / --t-align) */
+.t-layout-justify-end { --t-justify: flex-end; }
+.t-layout-justify-center { --t-justify: center; }
+.t-layout-justify-between { --t-justify: space-between; }
+.t-layout-align-center { --t-align: center; }
+.t-layout-align-end { --t-align: flex-end; }
+
+/* Responsive: rows stack (column) on narrow viewport when opt-in class is on root */
+@media (max-width: 48rem) {
+  .t-layout-responsive .t-layout.row {
+    flex-direction: column;
+  }
+}
+
+/* RTL: row direction reversed when document is RTL */
+html[dir="rtl"] .t-layout.row {
+  flex-direction: row-reverse;
+}
+
+/* Print: rows stack when printing (opt-in class on root) */
+@media print {
+  .t-layout-print-stack .t-layout.row {
+    flex-direction: column;
+  }
+}
+
+/* Gap-only or padding-only (opt-out via data attributes) */
+.t-layout[data-t-no-padding] {
+  padding: 0;
+}
+.t-layout[data-t-no-gap] {
+  gap: 0;
+}
+
+/* Safe area: add env(safe-area-inset-*) to padding (opt-in on root layout) */
+.t-layout.t-layout-safe-area {
+  padding-left: calc(var(--t-gap) + env(safe-area-inset-left, 0px));
+  padding-right: calc(var(--t-gap) + env(safe-area-inset-right, 0px));
+  padding-top: calc(var(--t-gap) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(var(--t-gap) + env(safe-area-inset-bottom, 0px));
+}
+
+/* Extra alignment */
+.t-layout-justify-around { --t-justify: space-around; }
+.t-layout-align-start { --t-align: flex-start; }
+.t-layout-align-baseline { --t-align: baseline; }
+
+/* Order (use on flex children of .t-layout to reorder without changing DOM) */
+.t-layout-order-1 { order: 1; }
+.t-layout-order-2 { order: 2; }
+.t-layout-order-3 { order: 3; }
+.t-layout-order-4 { order: 4; }
+.t-layout-order-5 { order: 5; }
+.t-layout-order-first { order: -9999; }
+.t-layout-order-last { order: 9999; }
