@@ -315,6 +315,22 @@ ThamanyanLS turns spacing into a reflection of information hierarchy.
 
 ---
 
+## Publishing
+
+Before publishing to npm:
+
+1. **Name:** If `thamanyanls` is taken, switch to a scoped name (e.g. `@veertoooz/thamanyanls`) and ensure `publishConfig.access` is `"public"`.
+2. **Auth:** Run `npm login` (or confirm with `npm whoami`).
+3. **Version:** Bump if needed: `npm version patch|minor|major` or edit `version` in package.json.
+4. **Dry run:** Run `npm pack` and inspect the generated `.tgz` (should contain package.json, README, LICENSE, and `dist/`).
+
+Then publish:
+
+- Unscoped: `npm publish`
+- Scoped: `npm publish --access public` (or rely on `publishConfig.access` in package.json)
+
+---
+
 ## License
 
 MIT

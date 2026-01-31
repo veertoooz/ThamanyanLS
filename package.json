@@ -5,6 +5,17 @@
   "main": "dist/thamanyan.css",
   "style": "dist/thamanyan.css",
   "unpkg": "dist/thamanyan.js",
+  "exports": {
+    ".": {
+      "style": "./dist/thamanyan.css",
+      "default": "./dist/thamanyan.css"
+    },
+    "./dist/thamanyan.css": "./dist/thamanyan.css",
+    "./dist/thamanyan.js": "./dist/thamanyan.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],
