@@ -81,7 +81,7 @@ ThamanyanLS deals only with **layout logic**.
 ## Layout model
 
 - Layout is always `display: flex`
-- Direction is explicit (`row` or `column`)
+- Default direction is `column`; add `row` for horizontal
 - Spacing is contextual, not manual
 
 This is a deliberate constraint.
@@ -112,7 +112,7 @@ ThamanyanLS exposes a **fixed set of size-only CSS variables** for consumers (e.
 | Root variable | Default | Description |
 |---------------|---------|-------------|
 | `--ls-base` | `1rem` | Base unit for space, gap, padding at depth 0. |
-| `--ls-breakpoint` | `48rem` | Responsive breakpoint for `t-layout-responsive`. |
+| `--ls-breakpoint` | `48rem` | Responsive breakpoint (rows stack below this). Use `--ls-breakpoint-sm` (24rem), `--ls-breakpoint-md` (48rem), or `--ls-breakpoint-lg` (64rem) to override. |
 | `--ls-scale` | `0.85` | Scale factor per depth (d1 = base × scale, d2 = base × scale², …). |
 | `--ls-radius-ratio` | `0.375` | Radius at each depth = that depth’s space × this ratio. |
 | `--ls-text-ratio` | `1` | Text size at each depth = that depth’s space × this ratio. |
@@ -137,9 +137,10 @@ Example: `:root { --ls-base: 1.25rem; --ls-scale: 0.9; }` for a larger, gentler 
 npm install thamanyanls
 ```
 
-Then in your app (single script injects styles and sets automatic level):
+Then in your app (include viewport meta for mobile; single script injects styles and sets automatic level):
 
 ```html
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="node_modules/thamanyanls/dist/thamanyan.js"></script>
 ```
 
@@ -160,9 +161,9 @@ You can also copy `dist/thamanyan.js` into your project. Without the script, onl
 ### Basic example
 
 ```html
-<div class="t-layout column">
+<div class="t-layout">
   <div class="t-layout row">
-    <div class="t-layout column">
+    <div class="t-layout">
       Content
     </div>
   </div>
@@ -175,11 +176,21 @@ Result:
 - Inner layout → tighter spacing
 - All automatic
 
-**Grow / shrink / wrap / scroll:** Use `t-layout-grow` on the layout that should take remaining space (e.g. main content), `t-layout-shrink-0` on fixed-width items (e.g. sidebar), `t-layout-scroll` for scrollable flex children (e.g. long list). Use `t-layout-wrap` on a row so items wrap on narrow space.
+**App shell:** Use `t-layout-app` for full viewport with sticky header, scrollable main, and fixed footer:
+
+```html
+<div class="t-layout t-layout-app">
+  <header>Header</header>
+  <main>Content</main>
+  <footer>Footer</footer>
+</div>
+```
+
+**Grow / shrink / wrap / scroll:** Use `t-layout-grow` on the layout that should take remaining space (e.g. main content), `t-layout-sidebar` for responsive sidebar (or `t-layout-shrink-0` for fixed-width), `t-layout-container` for content width (80ch), `t-layout-scroll` for scrollable flex children. Use `t-layout-wrap` on a row so items wrap on narrow space. For non-layout flex children (e.g. `span`), use `t-flex-1`, `t-flex-2`, `t-flex-3` to grow or `t-flex-none` for fixed size.
 
 ```html
 <div class="t-layout row">
-  <aside class="t-layout column t-layout-shrink-0">Sidebar</aside>
+  <aside class="t-layout column t-layout-sidebar">Sidebar</aside>
   <main class="t-layout column t-layout-grow">Content</main>
 </div>
 <div class="t-layout row t-layout-wrap">...</div>
@@ -269,10 +280,10 @@ Gap is clamped so deep nesting does not make it too small and root does not exce
 
 **Responsive (mobile):**
 
-Add the class `t-layout-responsive` to your root layout (e.g. the outermost `.t-layout`). On narrow viewports (≤`--ls-breakpoint`, default 48rem), all `.t-layout.row` inside that root will automatically stack as columns. Override the breakpoint: `:root { --ls-breakpoint: 40rem; }`.
+Responsive behavior is default. On narrow viewports (≤`--ls-breakpoint`, default 48rem), all `.t-layout.row` stack as columns. To keep a row horizontal (e.g. navbar), add `data-t-no-responsive`. Override the breakpoint: `:root { --ls-breakpoint: var(--ls-breakpoint-sm); }`. For show/hide at breakpoints, use `t-below-sm-hide`, `t-above-md-show`, `t-above-md-hide`, and similar utilities.
 
 ```html
-<div class="t-layout column t-layout-responsive">
+<div class="t-layout column">
   ...
 </div>
 ```
@@ -297,7 +308,7 @@ Layout uses `justify-content` and `align-items`. Set via CSS variables `--t-just
 <div class="t-layout column t-layout-print-stack">...</div>
 ```
 
-**Gap-only or padding-only:** Use `data-t-no-padding` on a layout for gap but no padding; use `data-t-no-gap` for padding but no gap.
+**Gap-only or padding-only:** Use `data-t-no-padding` on a layout for gap but no padding; use `data-t-no-gap` for padding but no gap. **Gap override:** Use `t-layout-gap-none`, `t-layout-gap-tight` (0.5×), or `t-layout-gap-loose` (1.5×) to override default gap. **Padding override:** Use `t-layout-padding-none`, `t-layout-padding-tight`, or `t-layout-padding-loose` similarly. **Width utilities:** Use `t-min-w-0` for flex row overflow fix (truncate/scroll); `t-min-h-0` for flex column overflow fix; `t-w-full` to fill parent width. Use `t-overflow-hidden` or `t-overflow-auto` for standalone overflow control.
 
 ```html
 <div class="t-layout row" data-t-no-padding>...</div>

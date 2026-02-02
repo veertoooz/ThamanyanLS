@@ -11,13 +11,13 @@
   </style>
 </head>
 <body>
-  <div class="t-layout card column t-layout-responsive">
-    <header class="t-layout row t-layout-justify-between t-layout-sticky" style="background: #fff; z-index: 1;">
+  <div class="t-layout t-layout-app card">
+    <header class="t-layout row t-layout-justify-between" style="background: #fff; z-index: 1;">
       <h1>ThamanyanLS — Tag showcase</h1>
       <span class="tag-label">Level 1</span>
     </header>
 
-    <main class="t-layout column t-layout-grow">
+    <main class="t-layout column">
       <!-- Headings h1–h6 -->
       <section class="t-layout column card">
         <span class="tag-label">h1, h2, h3, h4, h5, h6</span>
@@ -81,7 +81,7 @@
           <h3>Article</h3>
           <p>Content in article.</p>
         </article>
-        <aside class="t-layout column card t-layout-shrink-0" style="min-width: min(10rem, 100%);">
+        <aside class="t-layout column card t-layout-sidebar">
           <span class="tag-label">aside</span>
           <p>Aside content.</p>
         </aside>
@@ -169,7 +169,7 @@
 
       <!-- t-layout-scroll, t-layout-reverse -->
       <section class="t-layout row card" style="min-height: 12rem;">
-        <div class="t-layout column card t-layout-shrink-0" style="min-width: 8rem;">
+        <div class="t-layout column card t-layout-sidebar" style="--ls-sidebar-min: 8rem;">
           <span class="tag-label">t-layout-scroll</span>
           <p>Sidebar</p>
         </div>
@@ -197,11 +197,69 @@
           <div class="t-layout column t-layout-grow" style="background: rgba(0,0,0,.04); padding: 0.5rem;">grow</div>
           <div class="t-layout column t-layout-grow-2" style="background: rgba(0,0,0,.08); padding: 0.5rem;">grow-2</div>
         </div>
+        <div class="t-layout row">
+          <span class="t-flex-1" style="padding: 0.5rem; background: rgba(0,0,0,.04);">t-flex-1</span>
+          <span class="t-flex-none" style="padding: 0.5rem; background: rgba(0,0,0,.08);">t-flex-none</span>
+        </div>
         <div class="t-layout column t-layout-grow t-layout-scroll t-layout-overflow-y-auto" style="max-height: 5rem;">
           <p>overflow-y-auto</p>
           <p>Line 2</p>
           <p>Line 3</p>
         </div>
+      </section>
+
+      <!-- Gap override utilities -->
+      <section class="t-layout column card">
+        <span class="tag-label">t-layout-gap-tight, t-layout-gap-loose</span>
+        <div class="t-layout row t-layout-gap-tight">
+          <span style="padding: 0.5rem; background: rgba(0,0,0,.06);">gap-tight</span>
+          <span style="padding: 0.5rem; background: rgba(0,0,0,.06);">gap-tight</span>
+          <span style="padding: 0.5rem; background: rgba(0,0,0,.06);">gap-tight</span>
+        </div>
+        <div class="t-layout row t-layout-gap-loose">
+          <span style="padding: 0.5rem; background: rgba(0,0,0,.06);">gap-loose</span>
+          <span style="padding: 0.5rem; background: rgba(0,0,0,.06);">gap-loose</span>
+          <span style="padding: 0.5rem; background: rgba(0,0,0,.06);">gap-loose</span>
+        </div>
+      </section>
+
+      <!-- Padding override utilities -->
+      <section class="t-layout column card">
+        <span class="tag-label">t-layout-padding-tight, t-layout-padding-loose</span>
+        <div class="t-layout row t-layout-padding-tight" style="background: rgba(0,0,0,.03);">
+          <span style="padding: 0.5rem; background: rgba(0,0,0,.06);">padding-tight</span>
+          <span style="padding: 0.5rem; background: rgba(0,0,0,.06);">padding-tight</span>
+        </div>
+        <div class="t-layout row t-layout-padding-loose" style="background: rgba(0,0,0,.03);">
+          <span style="padding: 0.5rem; background: rgba(0,0,0,.06);">padding-loose</span>
+          <span style="padding: 0.5rem; background: rgba(0,0,0,.06);">padding-loose</span>
+        </div>
+      </section>
+
+      <!-- t-min-w-0 (flex overflow fix) -->
+      <section class="t-layout column card">
+        <span class="tag-label">t-min-w-0 (truncate long text)</span>
+        <div class="t-layout row" style="max-width: 12rem;">
+          <span class="t-flex-1 t-min-w-0" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Very long text that should truncate with ellipsis when space is limited</span>
+        </div>
+      </section>
+
+      <!-- t-min-h-0, t-overflow-auto -->
+      <section class="t-layout column card">
+        <span class="tag-label">t-min-h-0, t-overflow-auto (flex column scroll)</span>
+        <div class="t-layout column t-layout-grow" style="min-height: 0; max-height: 8rem;">
+          <div class="t-flex-1 t-min-h-0 t-overflow-auto" style="background: rgba(0,0,0,.04); padding: 0.5rem;">
+            <p>Item 1</p><p>Item 2</p><p>Item 3</p><p>Item 4</p><p>Item 5</p><p>Item 6</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Responsive breakpoint utilities -->
+      <section class="t-layout row card t-layout-wrap">
+        <span class="tag-label">t-below-md-hide, t-above-md-show, t-above-md-hide</span>
+        <span class="t-below-md-hide" style="padding: 0.5rem; background: rgba(0,0,0,.06);">Desktop only (t-below-md-hide)</span>
+        <span class="t-above-md-show" style="padding: 0.5rem; background: rgba(0,0,0,.06);">Wide only (t-above-md-show)</span>
+        <span class="t-above-md-hide" style="padding: 0.5rem; background: rgba(0,0,0,.06);">Mobile only (t-above-md-hide)</span>
       </section>
 
       <!-- Nav, footer -->

@@ -8,10 +8,12 @@ Complete list of classes, CSS variables, and data attributes.
 
 | Class | Description |
 |-------|-------------|
-| `t-layout` | Flex container. Must be used with `column` or `row`. |
-| `t-layout column` | `flex-direction: column`. |
+| `t-layout` | Flex container. Default direction is column; add `row` for horizontal. |
+| `t-layout column` | `flex-direction: column` (explicit; default). |
 | `t-layout row` | `flex-direction: row`. |
 | `t-layout-reverse` | Use with `column` or `row` for `column-reverse` or `row-reverse`. |
+| `t-layout-root` | Full viewport (`min-height: 100vh` / `100dvh`). Direct child `main` gets flex 1, scroll. |
+| `t-layout-app` | App shell preset: header (sticky), main (scroll), footer (shrink-0). Use with `header`, `main`, `footer` tags. |
 
 **Nesting:** Level is set by the optional `thamanyan.js` script (unlimited depth). Each `.t-layout` gets `--t-level` equal to its nesting depth; gap and padding are computed from that. Without the script, only the root has level 1—override `--t-level` manually on nested layouts if needed.
 
@@ -24,8 +26,12 @@ Complete list of classes, CSS variables, and data attributes.
 | `t-layout-grow` | `flex: 1` — use on the layout that should take remaining space. |
 | `t-layout-grow-2` | `flex: 2` — grow twice as much as `t-layout-grow`. |
 | `t-layout-grow-3` | `flex: 3` — grow three times as much. |
+| `t-layout-grow-4` | `flex: 4` — grow four times as much. |
+| `t-layout-grow-5` | `flex: 5` — grow five times as much. |
 | `t-layout-grow-auto` | `flex: 1 1 auto` — grow from content size instead of 0. |
 | `t-layout-shrink-0` | `flex-shrink: 0` — use on fixed-width layouts (e.g. sidebar). |
+| `t-layout-sidebar` | Responsive sidebar: `min-width: min(var(--ls-sidebar-min, 10rem), 100%)`, `flex-shrink: 0`. Use instead of `t-layout-shrink-0` + inline min-width. |
+| `t-layout-container` | Content width: `max-width: var(--ls-container)`, centered. Use for readable line length (default 80ch). |
 | `t-layout-shrink` | `flex-shrink: 1` — explicit shrink when needed. |
 | `t-layout-scroll` | `min-height: 0; overflow: auto` — for scrollable flex children (e.g. long lists). |
 | `t-layout-wrap` | `flex-wrap: wrap` — row items wrap on narrow space. |
@@ -38,6 +44,67 @@ Complete list of classes, CSS variables, and data attributes.
 | `t-layout-sticky` | `position: sticky; top: 0` — for sticky headers/sidebars. Override `top` via CSS if needed. |
 
 Use these **on the same element** as `t-layout` (e.g. `class="t-layout column t-layout-grow"`).
+
+**Gap override:** Use `t-layout-gap-none`, `t-layout-gap-tight`, or `t-layout-gap-loose` to override default gap. Inside flex column with gap, block flow margin (p + p) may be additive; override with custom CSS if needed.
+
+| Class | Effect |
+|-------|--------|
+| `t-layout-gap-none` | `gap: 0` — class alternative to data-t-no-gap |
+| `t-layout-gap-tight` | `gap` = 0.5× default |
+| `t-layout-gap-loose` | `gap` = 1.5× default |
+
+**Padding override:** Use `t-layout-padding-none`, `t-layout-padding-tight`, or `t-layout-padding-loose` to override default padding.
+
+| Class | Effect |
+|-------|--------|
+| `t-layout-padding-none` | `padding: 0` — class alternative to data-t-no-padding |
+| `t-layout-padding-tight` | `padding` = 0.5× default |
+| `t-layout-padding-loose` | `padding` = 1.5× default |
+
+---
+
+## Flex utilities (children)
+
+Standalone utilities for flex children. Use on any element inside a flex parent (no `t-layout` required).
+
+| Class | Effect |
+|-------|--------|
+| `t-flex-none` | `flex: 0 0 auto` — fixed size, no grow/shrink. |
+| `t-flex-initial` | `flex: 0 1 auto` — default flex, shrink only. |
+| `t-flex-1` | `flex: 1` — take remaining space. |
+| `t-flex-2` | `flex: 2` — 2× grow. |
+| `t-flex-3` | `flex: 3` — 3× grow. |
+
+**Example:**
+```html
+<div class="t-layout row">
+  <span class="t-flex-1">Takes remaining space</span>
+  <span class="t-flex-none">Fixed</span>
+</div>
+```
+
+---
+
+## Width / min-height utilities
+
+Standalone utilities for min-width, min-height, and width. Use on any element.
+
+| Class | Effect |
+|-------|--------|
+| `t-min-w-0` | `min-width: 0` — allow flex child to shrink below content size (fix overflow/scroll, row) |
+| `t-min-h-0` | `min-height: 0` — allow flex child to shrink below content size (fix overflow/scroll, column) |
+| `t-w-full` | `width: 100%` — fill parent width |
+
+**Use case:** `t-min-w-0` — flex row child with long text that should truncate or scroll. `t-min-h-0` — flex column child that should scroll. `t-w-full` — fill available width (e.g. input in flex row).
+
+**Overflow utilities (standalone):**
+
+| Class | Effect |
+|-------|--------|
+| `t-overflow-hidden` | `overflow: hidden` |
+| `t-overflow-auto` | `overflow: auto` |
+
+Use on any element; no `t-layout` required. For per-axis overflow on layouts, use `t-layout-overflow-x-auto`, `t-layout-overflow-y-auto`.
 
 ---
 
@@ -77,6 +144,18 @@ Layouts use `justify-content` and `align-items`. Set via variables or classes.
 
 ---
 
+## Aspect ratio
+
+Standalone utilities for video, cards, images. Use on any element.
+
+| Class | Effect |
+|-------|--------|
+| `t-aspect-16-9` | `aspect-ratio: 16/9` |
+| `t-aspect-4-3` | `aspect-ratio: 4/3` |
+| `t-aspect-1-1` | `aspect-ratio: 1/1` |
+
+---
+
 ## Order (flex children)
 
 Use on **children** of a layout to change visual order without changing the DOM.
@@ -91,18 +170,51 @@ Use on **children** of a layout to change visual order without changing the DOM.
 
 ## Responsive and print
 
+**Responsive (default):** On viewport ≤ `--ls-breakpoint` (default 48rem), all `.t-layout.row` stack as column. No class needed. To keep a row horizontal on narrow screens (e.g. navbar), add `data-t-no-responsive` — such rows also get `flex-wrap: wrap` by default. Opt-out of wrap with `data-t-no-wrap`.
+
 | Class | Where | Effect |
 |-------|--------|-------|
-| `t-layout-responsive` | Root layout | On viewport ≤ `--ls-breakpoint` (default 48rem), all `.t-layout.row` inside stack as column. |
 | `t-layout-print-stack` | Root layout | In print, all `.t-layout.row` inside stack as column. |
 
 ---
 
-## Opt-in behavior
+## Responsive breakpoint utilities
+
+Show or hide elements at breakpoints. Uses `--ls-breakpoint-sm` (24rem), `--ls-breakpoint-md` (48rem), `--ls-breakpoint-lg` (64rem).
+
+**Hide below breakpoint (desktop-only content):**
+
+| Class | Effect | Use case |
+|-------|--------|----------|
+| `t-below-sm-hide` | `display: none` when viewport ≤ 24rem | Hide on mobile |
+| `t-below-md-hide` | `display: none` when viewport ≤ 48rem | Hide on small screens |
+| `t-below-lg-hide` | `display: none` when viewport ≤ 64rem | Hide on medium screens |
+
+**Show above breakpoint (hidden by default):**
+
+| Class | Effect | Use case |
+|-------|--------|----------|
+| `t-above-sm-show` | Hidden by default; visible when viewport > 24rem | Desktop-only nav |
+| `t-above-md-show` | Hidden by default; visible when viewport > 48rem | Large-screen content |
+| `t-above-lg-show` | Hidden by default; visible when viewport > 64rem | Wide-screen content |
+
+**Hide above breakpoint (mobile-only content):**
+
+| Class | Effect | Use case |
+|-------|--------|----------|
+| `t-above-sm-hide` | `display: none` when viewport > 24rem | Mobile menu toggle |
+| `t-above-md-hide` | `display: none` when viewport > 48rem | Mobile-only back button |
+| `t-above-lg-hide` | `display: none` when viewport > 64rem | Mobile-only controls |
+
+---
+
+## Safe area
+
+**Default:** `body` has `env(safe-area-inset-*)` padding for notch / home indicator on mobile. No class needed.
 
 | Class | Effect |
 |-------|--------|
-| `t-layout-safe-area` | Adds `env(safe-area-inset-*)` to padding (notch / home indicator). Use on root layout. |
+| `t-layout-safe-area` | Adds safe-area insets to a specific layout (use when root is not `body`). |
 
 ---
 
@@ -113,6 +225,8 @@ Use on **children** of a layout to change visual order without changing the DOM.
 | `data-manual` | Disables automatic gap and padding (`gap: unset; padding: unset`). |
 | `data-t-no-padding` | Padding set to 0; gap unchanged. |
 | `data-t-no-gap` | Gap set to 0; padding unchanged. |
+| `data-t-no-responsive` | Row stays horizontal on narrow viewport (opt-out of default stack). |
+| `data-t-no-wrap` | Opt-out of default wrap on `data-t-no-responsive` rows. |
 
 ---
 
@@ -158,7 +272,13 @@ Override on `:root` or `html` to control the relative scale. Defaults are applie
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `--ls-base` | `1rem` | Base unit at depth 0 (space, gap, padding). |
-| `--ls-breakpoint` | `48rem` | Responsive breakpoint for `t-layout-responsive` (viewport max-width). |
+| `--ls-breakpoint` | `48rem` | Responsive breakpoint (viewport max-width). Override with `--ls-breakpoint-sm` (24rem), `--ls-breakpoint-md` (48rem), or `--ls-breakpoint-lg` (64rem). |
+| `--ls-breakpoint-sm` | `24rem` | Small breakpoint (384px). |
+| `--ls-breakpoint-md` | `48rem` | Medium breakpoint (768px). |
+| `--ls-breakpoint-lg` | `64rem` | Large breakpoint (1024px). |
+| `--ls-touch-min` | `2.75rem` | Min touch target (44px) for button, select, etc. inside depth. |
+| `--ls-container` | `min(80ch, 100%)` | Max content width for `t-layout-container`. |
+| `--ls-sidebar-min` | `10rem` | Min sidebar width for `t-layout-sidebar`. |
 | `--ls-scale` | `0.85` | Scale per depth (d1 = base × scale, d2 = base × scale², …). |
 | `--ls-radius-ratio` | `0.375` | Radius = depth’s space × this ratio. |
 | `--ls-text-ratio` | `1` | Text size = depth’s space × this ratio. |
@@ -182,7 +302,7 @@ Inside `.ls-d0` … `.ls-d5`, these elements get depth-relative typography, spac
 | Tag | Typography | Spacing (gap / padding) | Border / radius |
 |-----|------------|-------------------------|-----------------|
 | h1–h6 | ratio / inherit | gap via flex parent | — |
-| p, blockquote, pre, address | inherit | gap via flex parent | — |
+| p, blockquote, pre, address | inherit | gap via flex parent; adjacent siblings (p + p, etc.) get margin-block-start --ls-space | — |
 | section, article, aside, header, footer, nav, main | inherit | flex column + gap --ls-space | — |
 | ul, ol | inherit | flex column + gap, padding-inline-start | — |
 | li, dl, dt, dd | inherit | gap via flex parent (ul/ol/dl) | — |

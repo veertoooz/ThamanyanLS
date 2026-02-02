@@ -6,10 +6,20 @@
  */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+body {
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+}
+
 /* Root: single place to control the whole relative system. Override on :root or html. */
 :root {
   --ls-base: 1rem;
   --ls-breakpoint: 48rem;
+  --ls-breakpoint-sm: 24rem;
+  --ls-breakpoint-md: 48rem;
+  --ls-breakpoint-lg: 64rem;
+  --ls-touch-min: 2.75rem;
+  --ls-container: min(80ch, 100%);
+  --ls-sidebar-min: 10rem;
   --ls-scale: 0.85;
   --ls-radius-ratio: 0.375;
   --ls-text-ratio: 1;
@@ -31,6 +41,7 @@
   --t-align: stretch;
 
   display: flex;
+  flex-direction: column;
   gap: var(--t-gap-row, var(--t-gap)) var(--t-gap-column, var(--t-gap));
   padding: var(--t-gap);
   justify-content: var(--t-justify);
@@ -140,6 +151,14 @@
   margin-block: var(--ls-space);
 }
 
+/* Block flow: adjacent sibling spacing (p + p, etc.) */
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) p + p,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) blockquote + blockquote,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) pre + pre,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) address + address {
+  margin-block-start: var(--ls-space);
+}
+
 /* Inline inside depth: font-size inherit */
 :where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) span,
 :where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) abbr,
@@ -181,6 +200,17 @@
   border-width: var(--ls-border);
   border-radius: var(--ls-radius);
   box-sizing: border-box;
+}
+
+/* Touch targets: min 44px for interactive elements (Apple HIG) */
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) button,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) input[type="button"],
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) input[type="submit"],
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) input[type="reset"],
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) [role="button"],
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) select {
+  min-height: var(--ls-touch-min, 2.75rem);
+  min-width: var(--ls-touch-min, 2.75rem);
 }
 
 /* Tables inside depth */
@@ -260,11 +290,26 @@
 .t-layout.t-layout-grow-3 {
   flex: 3;
 }
+.t-layout.t-layout-grow-4 {
+  flex: 4;
+}
+.t-layout.t-layout-grow-5 {
+  flex: 5;
+}
 .t-layout.t-layout-grow-auto {
   flex: 1 1 auto;
 }
 .t-layout.t-layout-shrink-0 {
   flex-shrink: 0;
+}
+.t-layout.t-layout-sidebar {
+  min-width: min(var(--ls-sidebar-min, 10rem), 100%);
+  flex-shrink: 0;
+}
+.t-layout.t-layout-container {
+  max-width: min(var(--ls-container, 80ch), 100%);
+  width: 100%;
+  margin-inline: auto;
 }
 .t-layout.t-layout-shrink {
   flex-shrink: 1;
@@ -293,6 +338,61 @@
   top: 0;
 }
 
+/* Root layout: full viewport */
+.t-layout.t-layout-root {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.t-layout-root > main {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App shell preset: header (sticky) + main (scroll) + footer */
+.t-layout.t-layout-app {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.t-layout-app > header {
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+}
+.t-layout-app > main {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.t-layout-app > footer {
+  flex-shrink: 0;
+}
+
+/* Aspect ratio utilities */
+.t-aspect-16-9 { aspect-ratio: 16/9; }
+.t-aspect-4-3 { aspect-ratio: 4/3; }
+.t-aspect-1-1 { aspect-ratio: 1/1; }
+
+/* Flex utilities (use on flex children, standalone) */
+.t-flex-none { flex: 0 0 auto; }
+.t-flex-initial { flex: 0 1 auto; }
+.t-flex-1 { flex: 1; }
+.t-flex-2 { flex: 2; }
+.t-flex-3 { flex: 3; }
+
+/* Width / min-height utilities (standalone) */
+.t-min-w-0 { min-width: 0; }
+.t-min-h-0 { min-height: 0; }
+.t-w-full { width: 100%; }
+
+/* Overflow utilities (standalone) */
+.t-overflow-hidden { overflow: hidden; }
+.t-overflow-auto { overflow: auto; }
+
 /* Wrap (use with .t-layout.row) */
 .t-layout-wrap {
   flex-wrap: wrap;
@@ -308,11 +408,48 @@
 .t-layout-align-center { --t-align: center; }
 .t-layout-align-end { --t-align: flex-end; }
 
-/* Responsive: rows stack (column) on narrow viewport when opt-in class is on root */
+/* Responsive: rows stack (column) on narrow viewport by default. Opt-out with data-t-no-responsive. */
 @media (max-width: var(--ls-breakpoint)) {
-  .t-layout-responsive .t-layout.row {
+  .t-layout.row:not([data-t-no-responsive]) {
     flex-direction: column;
   }
+  .t-layout.row[data-t-no-responsive]:not([data-t-no-wrap]) {
+    flex-wrap: wrap;
+  }
+}
+
+/* Responsive breakpoint utilities: show/hide at breakpoints */
+@media (max-width: var(--ls-breakpoint-sm)) {
+  .t-below-sm-hide { display: none !important; }
+}
+@media (max-width: var(--ls-breakpoint-md)) {
+  .t-below-md-hide { display: none !important; }
+}
+@media (max-width: var(--ls-breakpoint-lg)) {
+  .t-below-lg-hide { display: none !important; }
+}
+
+.t-above-sm-show { display: none; }
+.t-above-md-show { display: none; }
+.t-above-lg-show { display: none; }
+@media (min-width: calc(var(--ls-breakpoint-sm) + 0.0625rem)) {
+  .t-above-sm-show { display: revert; }
+}
+@media (min-width: calc(var(--ls-breakpoint-md) + 0.0625rem)) {
+  .t-above-md-show { display: revert; }
+}
+@media (min-width: calc(var(--ls-breakpoint-lg) + 0.0625rem)) {
+  .t-above-lg-show { display: revert; }
+}
+
+@media (min-width: calc(var(--ls-breakpoint-sm) + 0.0625rem)) {
+  .t-above-sm-hide { display: none !important; }
+}
+@media (min-width: calc(var(--ls-breakpoint-md) + 0.0625rem)) {
+  .t-above-md-hide { display: none !important; }
+}
+@media (min-width: calc(var(--ls-breakpoint-lg) + 0.0625rem)) {
+  .t-above-lg-hide { display: none !important; }
 }
 
 /* RTL: row direction reversed when document is RTL */
@@ -334,6 +471,16 @@ html[dir="rtl"] .t-layout.row {
 .t-layout[data-t-no-gap] {
   gap: 0;
 }
+
+/* Gap override utilities */
+.t-layout.t-layout-gap-none { gap: 0; }
+.t-layout.t-layout-gap-tight { gap: calc(var(--ls-gap, var(--t-gap)) * 0.5); }
+.t-layout.t-layout-gap-loose { gap: calc(var(--ls-gap, var(--t-gap)) * 1.5); }
+
+/* Padding override utilities */
+.t-layout.t-layout-padding-none { padding: 0; }
+.t-layout.t-layout-padding-tight { padding: calc(var(--ls-padding, var(--t-gap)) * 0.5); }
+.t-layout.t-layout-padding-loose { padding: calc(var(--ls-padding, var(--t-gap)) * 1.5); }
 
 /* Safe area: add env(safe-area-inset-*) to padding (opt-in on root layout) */
 .t-layout.t-layout-safe-area {

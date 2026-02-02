@@ -17,7 +17,7 @@ This document helps AI agents quickly understand the project: what it is, how it
 
 - **Optional JS for level** — The optional `thamanyan.js` script sets `--t-level` on each `.t-layout` by nesting depth (unlimited). Without the script, only the root has level 1; override `--t-level` manually on nested layouts if needed. All other behavior is CSS (flex, custom properties, media queries).
 - **Layout by depth** — Each `.t-layout` has `--t-level` (set by script or manually). Gap and padding are derived from that level.
-- **Opt-in features** — Responsive (rows stack on narrow viewport), print stack, safe area, gap-only/padding-only are enabled via classes or data attributes on the layout, not by default.
+- **Default mobile support** — Responsive (rows stack on narrow viewport) and safe area (body padding) are default. Opt-out with `data-t-no-responsive` on a row. Print stack, gap-only/padding-only remain opt-in.
 - **No breaking changes** — New features are additive: new classes or data attributes. Do not remove or rename existing ones without a major version.
 
 ---
@@ -41,9 +41,9 @@ This document helps AI agents quickly understand the project: what it is, how it
 
 ## 4. Naming and conventions
 
-- **Class prefix:** `t-layout` (base; use with `column` or `row`). Modifiers: `t-layout-*` (e.g. `t-layout-grow`, `t-layout-scroll`, `t-layout-reverse`, `t-layout-responsive`, `t-layout-justify-between`).
+- **Class prefix:** `t-layout` (base; default direction is column; add `row` for horizontal). Modifiers: `t-layout-*` (e.g. `t-layout-grow`, `t-layout-scroll`, `t-layout-reverse`, `t-layout-justify-between`). Presets: `t-layout-root` (full viewport, main scroll), `t-layout-app` (app shell: header sticky, main scroll, footer). Layout utilities: `t-layout-sidebar` (responsive min-width), `t-layout-container` (content width 80ch). Flex children (standalone): `t-flex-none`, `t-flex-initial`, `t-flex-1`, `t-flex-2`, `t-flex-3`. Aspect ratio: `t-aspect-16-9`, `t-aspect-4-3`, `t-aspect-1-1`. Responsive breakpoint utilities: `t-below-sm-hide`, `t-below-md-hide`, `t-below-lg-hide` (hide on narrow); `t-above-sm-show`, `t-above-md-show`, `t-above-lg-show` (show only on wide); `t-above-sm-hide`, `t-above-md-hide`, `t-above-lg-hide` (mobile-only). Gap override: `t-layout-gap-none`, `t-layout-gap-tight`, `t-layout-gap-loose`. Padding override: `t-layout-padding-none`, `t-layout-padding-tight`, `t-layout-padding-loose`. Width utilities: `t-min-w-0`, `t-min-h-0`, `t-w-full`. Overflow utilities (standalone): `t-overflow-hidden`, `t-overflow-auto`. Responsive stacking is default; use `data-t-no-responsive` to opt out.
 - **Depth classes (token contract):** `ls-d0` … `ls-d5` (max depth 5). Each sets all six `--ls-*` tokens in that scope. JS adds one per `.t-layout`; or add manually.
-- **Data attributes:** `data-manual` (opt-out of automatic gap/padding), `data-t-no-padding`, `data-t-no-gap`.
+- **Data attributes:** `data-manual` (opt-out of automatic gap/padding), `data-t-no-padding`, `data-t-no-gap`, `data-t-no-responsive` (opt-out of responsive row stacking), `data-t-no-wrap` (opt-out of default wrap on `data-t-no-responsive` rows).
 - **CSS variables (on `.t-layout` or parent):** `--t-level`, `--t-base`, `--t-gap`, `--t-gap-min`, `--t-gap-max`, `--t-justify`, `--t-align`.
 - **CSS variables (contract for consumers, Option B):** `--ls-space`, `--ls-gap`, `--ls-padding`, `--ls-radius`, `--ls-text`, `--ls-border`. Set per depth by `.ls-d0` … `.ls-d5`. No colors; SaryanTS owns colors.
 
@@ -54,11 +54,12 @@ This document helps AI agents quickly understand the project: what it is, how it
 - **Level:** Root `.t-layout` has `--t-level: 1` in CSS. Nested level is set by optional `thamanyan.js` (querySelectorAll `.t-layout`, count ancestor `.t-layout`, setProperty `--t-level`). Without script, only root has level 1; override manually if needed.
 - **Depth tokens:** Depth classes `.ls-d0` … `.ls-d5` set all six `--ls-*` tokens (space, gap, padding, radius, text, border). JS adds one `ls-dN` per `.t-layout` (depth capped at 5). Consumers (e.g. ParajanovCS) use `var(--ls-space)`, etc.
 - **Gap formula:** `--t-gap: clamp(var(--t-gap-min, 0.25rem), calc(var(--t-base) / var(--t-level)), var(--t-gap-max, 1rem))`.
-- **Direction:** `.t-layout.column` → `flex-direction: column`; `.t-layout.row` → `flex-direction: row`.
-- **Responsive:** Class `t-layout-responsive` on root + `@media (max-width: var(--ls-breakpoint))` (default 48rem) → all `.t-layout.row` inside that root become column (stack).
+- **Direction:** `.t-layout` defaults to `flex-direction: column`; `.t-layout.row` → `flex-direction: row`.
+- **Root / app presets:** `t-layout-root` — full viewport, `main` gets flex 1 + scroll. `t-layout-app` — same + header sticky, footer shrink-0.
+- **Responsive:** Default. `@media (max-width: var(--ls-breakpoint))` (default 48rem) → all `.t-layout.row` stack as column. Opt-out: `data-t-no-responsive` on a row.
 - **RTL:** `html[dir="rtl"] .t-layout.row` → `flex-direction: row-reverse`. No class needed.
 - **Print:** Class `t-layout-print-stack` on root + `@media print` → rows stack as column when printing.
-- **Safe area:** Class `t-layout-safe-area` on root → padding includes `env(safe-area-inset-*)`.
+- **Safe area:** Default on `body`. Class `t-layout-safe-area` for non-body root layouts.
 - **Re-run API:** `ThamanyanLS.init()` — call after DOM changes (SPA) to recalculate levels and depth classes.
 
 ---
