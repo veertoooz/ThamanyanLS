@@ -3,67 +3,230 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ThamanyanLS — Basic example</title>
-  <link rel="stylesheet" href="../dist/thamanyan.css">
+  <title>ThamanyanLS — Tag showcase</title>
   <script src="../dist/thamanyan.js"></script>
   <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: system-ui, sans-serif; color: #333; }
-    .t-layout { border: 1px dashed rgba(0,0,0,.15); min-height: 1.5rem; }
+    .t-layout { border: 1px dashed rgba(0,0,0,.15); }
     .t-layout .t-layout { background: rgba(0,0,0,.02); }
-    header, aside, .card, .stat { background: #f8f9fa; border-radius: 6px; padding: 0.5rem 0.75rem; }
-    .stat { text-align: center; }
-    .stat strong { display: block; font-size: 1.25rem; }
-    h1, h2, h3 { margin: 0; font-weight: 600; }
-    .muted { color: #666; font-size: 0.9rem; }
-    @media (max-width: 48rem) {
-      .t-layout aside { min-width: 0; }
-    }
   </style>
 </head>
 <body>
-  <!-- Level 1: app shell column (t-layout-responsive = rows stack on narrow viewport) -->
-  <div class="t-layout column t-layout-responsive">
-    <header class="t-layout row t-layout-justify-between">
-      <h1>Dashboard</h1>
-      <span class="muted">Level 1 — gap 1rem</span>
+  <div class="t-layout card column t-layout-responsive">
+    <header class="t-layout row t-layout-justify-between t-layout-sticky" style="background: #fff; z-index: 1;">
+      <h1>ThamanyanLS — Tag showcase</h1>
+      <span class="tag-label">Level 1</span>
     </header>
 
-    <!-- Level 2: main row (sidebar + content) -->
-    <div class="t-layout row" style="min-height: 60vh;">
-      <aside class="t-layout column t-layout-shrink-0" style="min-width: min(12rem, 100%);">
-        <a href="#">Nav A</a>
-        <a href="#">Nav B</a>
-        <a href="#">Nav C</a>
-        <span class="muted">Level 2</span>
-      </aside>
+    <main class="t-layout column t-layout-grow">
+      <!-- Headings h1–h6 -->
+      <section class="t-layout column card">
+        <span class="tag-label">h1, h2, h3, h4, h5, h6</span>
+        <h1>Heading 1</h1>
+        <h2>Heading 2</h2>
+        <h3>Heading 3</h3>
+        <h4>Heading 4</h4>
+        <h5>Heading 5</h5>
+        <h6>Heading 6</h6>
+      </section>
 
-      <!-- Level 3: main content column -->
-      <div class="t-layout column t-layout-grow">
-        <!-- Level 4: stats row -->
-        <div class="t-layout row t-layout-wrap">
-          <div class="stat"> <strong>42</strong> <span class="muted">Items</span> </div>
-          <div class="stat"> <strong>7</strong> <span class="muted">Active</span> </div>
-          <div class="stat"> <strong>99%</strong> <span class="muted">Health</span> </div>
+      <!-- Paragraph, blockquote, pre, address -->
+      <section class="t-layout column card">
+        <span class="tag-label">p, blockquote, pre, address</span>
+        <p>Paragraph with <code>code</code>, <em>em</em>, <strong>strong</strong>, <small>small</small>, <a href="#">link</a>.</p>
+        <blockquote>Blockquote: depth-relative spacing via flex + gap.</blockquote>
+        <pre>pre { font-family: monospace; }</pre>
+        <address>123 Example St, City</address>
+      </section>
+
+      <!-- Lists ul, ol, li -->
+      <section class="t-layout row t-layout-wrap">
+        <div class="t-layout column card t-layout-grow">
+          <span class="tag-label">ul, li</span>
+          <ul>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+          </ul>
         </div>
+        <div class="t-layout column card t-layout-grow">
+          <span class="tag-label">ol, li</span>
+          <ol>
+            <li>First</li>
+            <li>Second</li>
+            <li>Third</li>
+          </ol>
+        </div>
+      </section>
 
-        <!-- Level 4: content block -->
+      <!-- Definition list dl, dt, dd -->
+      <section class="t-layout column card">
+        <span class="tag-label">dl, dt, dd</span>
+        <dl>
+          <dt>Term A</dt>
+          <dd>Definition for A.</dd>
+          <dt>Term B</dt>
+          <dd>Definition for B.</dd>
+        </dl>
+      </section>
+
+      <!-- Section, article, aside -->
+      <section class="t-layout row t-layout-wrap">
+        <section class="t-layout column card t-layout-grow">
+          <span class="tag-label">section</span>
+          <h3>Section</h3>
+          <p>Content in section.</p>
+        </section>
+        <article class="t-layout column card t-layout-grow">
+          <span class="tag-label">article</span>
+          <h3>Article</h3>
+          <p>Content in article.</p>
+        </article>
+        <aside class="t-layout column card t-layout-shrink-0" style="min-width: min(10rem, 100%);">
+          <span class="tag-label">aside</span>
+          <p>Aside content.</p>
+        </aside>
+      </section>
+
+      <!-- Figure, figcaption, hr -->
+      <section class="t-layout column card">
+        <span class="tag-label">figure, figcaption, hr</span>
+        <figure>
+          <div style="background: #ddd; height: 4rem; border-radius: var(--ls-radius); display: flex; align-items: center; justify-content: center;">Placeholder</div>
+          <figcaption>Figcaption for the figure.</figcaption>
+        </figure>
+        <hr>
+        <p>Text after hr.</p>
+      </section>
+
+      <!-- Details, summary -->
+      <section class="t-layout column card">
+        <span class="tag-label">details, summary</span>
+        <details>
+          <summary>Click to expand</summary>
+          <p>Content inside details.</p>
+        </details>
+      </section>
+
+      <!-- Inline: span, abbr, cite, code, em, strong, mark, q, samp, sub, sup, kbd, time -->
+      <section class="t-layout column card">
+        <span class="tag-label">span, abbr, cite, code, em, strong, mark, q, samp, sub, sup, kbd, time</span>
+        <p>
+          <span>span</span>, <abbr title="abbreviation">abbr</abbr>, <cite>cite</cite>, <code>code</code>,
+          <em>em</em>, <strong>strong</strong>, <mark>mark</mark>, <q>quoted</q>, <samp>samp</samp>,
+          H<sub>2</sub>O, x<sup>2</sup>, <kbd>Ctrl</kbd>, <time datetime="2025-02-02">time</time>.
+        </p>
+      </section>
+
+      <!-- Form elements -->
+      <section class="t-layout column card">
+        <span class="tag-label">form, input, button, select, textarea, label, fieldset, legend</span>
+        <form class="t-layout column">
+          <label for="demo-input">Label</label>
+          <input id="demo-input" type="text" placeholder="Input">
+          <fieldset class="t-layout column">
+            <legend>Legend</legend>
+            <input type="checkbox" id="c1">
+            <label for="c1">Checkbox</label>
+          </fieldset>
+          <select>
+            <option>Select option</option>
+          </select>
+          <textarea placeholder="Textarea" rows="2"></textarea>
+          <button type="button">Button</button>
+        </form>
+      </section>
+
+      <!-- Table -->
+      <section class="t-layout column card">
+        <span class="tag-label">table, caption, th, td</span>
+        <table>
+          <caption>Table caption</caption>
+          <thead>
+            <tr><th>Col A</th><th>Col B</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Cell 1</td><td>Cell 2</td></tr>
+            <tr><td>Cell 3</td><td>Cell 4</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Embedded: img, video -->
+      <section class="t-layout row t-layout-wrap">
+        <figure class="t-layout column card t-layout-grow">
+          <span class="tag-label">img</span>
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='60'%3E%3Crect fill='%23ddd' width='100' height='60'/%3E%3Ctext x='50' y='35' text-anchor='middle' fill='%23999' font-size='12'%3Eimg%3C/text%3E%3C/svg%3E" alt="Placeholder">
+          <figcaption>Image with border-radius.</figcaption>
+        </figure>
+        <figure class="t-layout column card t-layout-grow">
+          <span class="tag-label">video</span>
+          <video width="160" height="90" controls style="background:#ddd;">
+            <source src="#" type="video/mp4">
+          </video>
+          <figcaption>Video placeholder.</figcaption>
+        </figure>
+      </section>
+
+      <!-- t-layout-scroll, t-layout-reverse -->
+      <section class="t-layout row card" style="min-height: 12rem;">
+        <div class="t-layout column card t-layout-shrink-0" style="min-width: 8rem;">
+          <span class="tag-label">t-layout-scroll</span>
+          <p>Sidebar</p>
+        </div>
+        <div class="t-layout column card t-layout-grow t-layout-scroll">
+          <span class="tag-label">Scrollable area</span>
+          <p>Item 1</p><p>Item 2</p><p>Item 3</p><p>Item 4</p><p>Item 5</p><p>Item 6</p>
+        </div>
+      </section>
+      <section class="t-layout column card t-layout-reverse">
+        <span class="tag-label">t-layout-reverse (column-reverse)</span>
+        <p>First (bottom)</p>
+        <p>Second (middle)</p>
+        <p>Third (top)</p>
+      </section>
+
+      <!-- align-self, grow-auto, sticky, overflow -->
+      <section class="t-layout column card">
+        <span class="tag-label">t-layout-self-*, t-layout-grow-auto, t-layout-sticky, t-layout-overflow-*</span>
+        <div class="t-layout row" style="min-height: 6rem; align-items: stretch;">
+          <span class="t-layout-self-center" style="padding: 0.5rem; background: rgba(0,0,0,.06);">self-center</span>
+          <span class="t-layout-self-end" style="padding: 0.5rem; background: rgba(0,0,0,.06);">self-end</span>
+          <span class="t-layout-self-start" style="padding: 0.5rem; background: rgba(0,0,0,.06);">self-start</span>
+        </div>
+        <div class="t-layout row">
+          <div class="t-layout column t-layout-grow" style="background: rgba(0,0,0,.04); padding: 0.5rem;">grow</div>
+          <div class="t-layout column t-layout-grow-2" style="background: rgba(0,0,0,.08); padding: 0.5rem;">grow-2</div>
+        </div>
+        <div class="t-layout column t-layout-grow t-layout-scroll t-layout-overflow-y-auto" style="max-height: 5rem;">
+          <p>overflow-y-auto</p>
+          <p>Line 2</p>
+          <p>Line 3</p>
+        </div>
+      </section>
+
+      <!-- Nav, footer -->
+      <nav class="t-layout row">
+        <a href="#">Nav link 1</a>
+        <a href="#">Nav link 2</a>
+        <a href="#">Nav link 3</a>
+      </nav>
+      <footer class="t-layout column">
+        <span class="tag-label">footer</span>
+        <p><small>ThamanyanLS tag showcase — all HTML5 elements inside depth.</small></p>
         <div class="t-layout column">
-          <h2>Section title</h2>
-          <!-- Level 5: card row -->
-          <div class="t-layout row">
-            <div class="t-layout column card t-layout-grow">
-              <h3>Card A</h3>
-              <p class="muted">Level 5 — tightest spacing.</p>
-            </div>
-            <div class="t-layout column card t-layout-grow">
-              <h3>Card B</h3>
-              <p class="muted">Same depth, same gap.</p>
-            </div>
-          </div>
+          <span class="tag-label">ThamanyanLS.init() (SPA)</span>
+          <button type="button" id="spa-demo">Add layout, then init()</button>
+          <div id="spa-target"></div>
         </div>
-      </div>
-    </div>
+      </footer>
+    </main>
   </div>
+  <script>
+    document.getElementById('spa-demo').addEventListener('click', function () {
+      var target = document.getElementById('spa-target');
+      target.innerHTML = '<div class="t-layout column card"><p>Dynamically added layout</p></div>';
+      if (window.ThamanyanLS) ThamanyanLS.init();
+    });
+  </script>
 </body>
 </html>

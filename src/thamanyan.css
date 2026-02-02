@@ -2,20 +2,231 @@
  * ThamanyanLS (Layout System) — Context-aware layout system for deep interfaces
  * https://github.com/.../ThamanyanLS
  * Layout spacing follows nesting level. Optional JS for automatic level (unlimited depth). Framework-agnostic.
+ * Load only thamanyan.js — styles are injected at runtime. Tune the system via :root variables below.
  */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Root: single place to control the whole relative system. Override on :root or html. */
+:root {
+  --ls-base: 1rem;
+  --ls-breakpoint: 48rem;
+  --ls-scale: 0.85;
+  --ls-radius-ratio: 0.375;
+  --ls-text-ratio: 1;
+  --ls-border-ratio: 0.0625;
+  --ls-h1-ratio: 1.5;
+  --ls-h2-ratio: 1.25;
+  --ls-h3-ratio: 1.125;
+  --ls-h4-ratio: 1.0625;
+  --ls-h5-ratio: 1;
+  --ls-h6-ratio: 0.9375;
+  --ls-small-ratio: 0.875;
+}
 
 .t-layout {
   --t-level: 1;
-  --t-base: 1rem;
+  --t-base: var(--ls-base);
   --t-gap: clamp(var(--t-gap-min, 0.25rem), calc(var(--t-base) / var(--t-level)), var(--t-gap-max, 1rem));
   --t-justify: flex-start;
   --t-align: stretch;
 
   display: flex;
-  gap: var(--t-gap);
+  gap: var(--t-gap-row, var(--t-gap)) var(--t-gap-column, var(--t-gap));
   padding: var(--t-gap);
   justify-content: var(--t-justify);
   align-items: var(--t-align);
+}
+
+/* Depth tokens (Option B): --ls-* derived from :root; max depth 5. Consumers use var(--ls-space), etc. */
+.ls-d0 {
+  --ls-space: var(--ls-base);
+  --ls-gap: var(--ls-base);
+  --ls-padding: var(--ls-base);
+  --ls-radius: calc(var(--ls-base) * var(--ls-radius-ratio));
+  --ls-text: calc(var(--ls-base) * var(--ls-text-ratio));
+  --ls-border: calc(var(--ls-space) * var(--ls-border-ratio));
+  font-size: var(--ls-text);
+}
+.ls-d1 {
+  --ls-space: calc(var(--ls-base) * var(--ls-scale));
+  --ls-gap: calc(var(--ls-base) * var(--ls-scale));
+  --ls-padding: calc(var(--ls-base) * var(--ls-scale));
+  --ls-radius: calc(var(--ls-base) * var(--ls-scale) * var(--ls-radius-ratio));
+  --ls-text: calc(var(--ls-base) * var(--ls-scale) * var(--ls-text-ratio));
+  --ls-border: calc(var(--ls-space) * var(--ls-border-ratio));
+  font-size: var(--ls-text);
+}
+.ls-d2 {
+  --ls-space: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale));
+  --ls-gap: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale));
+  --ls-padding: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale));
+  --ls-radius: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-radius-ratio));
+  --ls-text: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-text-ratio));
+  --ls-border: calc(var(--ls-space) * var(--ls-border-ratio));
+  font-size: var(--ls-text);
+}
+.ls-d3 {
+  --ls-space: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale));
+  --ls-gap: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale));
+  --ls-padding: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale));
+  --ls-radius: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-radius-ratio));
+  --ls-text: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-text-ratio));
+  --ls-border: calc(var(--ls-space) * var(--ls-border-ratio));
+  font-size: var(--ls-text);
+}
+.ls-d4 {
+  --ls-space: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale));
+  --ls-gap: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale));
+  --ls-padding: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale));
+  --ls-radius: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-radius-ratio));
+  --ls-text: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-text-ratio));
+  --ls-border: calc(var(--ls-space) * var(--ls-border-ratio));
+  font-size: var(--ls-text);
+}
+.ls-d5 {
+  --ls-space: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale));
+  --ls-gap: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale));
+  --ls-padding: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale));
+  --ls-radius: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-radius-ratio));
+  --ls-text: calc(var(--ls-base) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-scale) * var(--ls-text-ratio));
+  --ls-border: calc(var(--ls-space) * var(--ls-border-ratio));
+  font-size: var(--ls-text);
+}
+
+/* Default typography inside depth: h1/h2/h3 relative without classes */
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) h1 {
+  font-size: calc(var(--ls-text) * var(--ls-h1-ratio));
+}
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) h2 {
+  font-size: calc(var(--ls-text) * var(--ls-h2-ratio));
+}
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) h3 {
+  font-size: calc(var(--ls-text) * var(--ls-h3-ratio));
+}
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) h4 {
+  font-size: calc(var(--ls-text) * var(--ls-h4-ratio));
+}
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) h5 {
+  font-size: calc(var(--ls-text) * var(--ls-h5-ratio));
+}
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) h6 {
+  font-size: calc(var(--ls-text) * var(--ls-h6-ratio));
+}
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) small {
+  font-size: calc(var(--ls-text) * var(--ls-small-ratio, 0.875));
+}
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) a {
+  font-size: inherit;
+}
+
+/* Block spacing inside depth: flex + gap (no margin) */
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) section,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) article,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) aside,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) header,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) footer,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) nav,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) main,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) blockquote,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) figure,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) details,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) address {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ls-space);
+}
+
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) hr {
+  margin-block: var(--ls-space);
+}
+
+/* Inline inside depth: font-size inherit */
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) span,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) abbr,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) cite,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) code,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) em,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) i,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) strong,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) mark,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) q,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) samp,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) sub,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) sup,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) var,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) time,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) u,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) s,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) dfn,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) kbd,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) data,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) summary {
+  font-size: inherit;
+}
+
+/* Forms inside depth */
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) input,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) button,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) select,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) textarea,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) output,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) progress,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) meter,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) label,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) legend,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) fieldset,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) form {
+  font-size: inherit;
+  padding: var(--ls-padding);
+  border-width: var(--ls-border);
+  border-radius: var(--ls-radius);
+  box-sizing: border-box;
+}
+
+/* Tables inside depth */
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) table {
+  border-collapse: collapse;
+  font-size: inherit;
+}
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) th,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) td {
+  padding: var(--ls-padding);
+  border-width: var(--ls-border);
+}
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) caption {
+  font-size: inherit;
+}
+
+/* Embedded inside depth */
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) img,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) video {
+  border-radius: var(--ls-radius);
+  max-width: 100%;
+}
+
+/* List inside depth: flex + gap (no margin) */
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) ul,
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) ol {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ls-space) * 0.5);
+  padding-inline-start: var(--ls-space);
+}
+:where(.ls-d0, .ls-d1, .ls-d2, .ls-d3, .ls-d4, .ls-d5) dl {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ls-space);
+}
+
+/* When .t-layout has a depth class, use --ls-gap/--ls-padding so layout and tokens share the same scale */
+.t-layout.ls-d0,
+.t-layout.ls-d1,
+.t-layout.ls-d2,
+.t-layout.ls-d3,
+.t-layout.ls-d4,
+.t-layout.ls-d5 {
+  gap: var(--ls-gap);
+  padding: var(--ls-padding);
 }
 
 .t-layout.column {
@@ -24,6 +235,12 @@
 
 .t-layout.row {
   flex-direction: row;
+}
+.t-layout.column.t-layout-reverse {
+  flex-direction: column-reverse;
+}
+.t-layout.row.t-layout-reverse {
+  flex-direction: row-reverse;
 }
 
 /* Nested level: set by optional thamanyan.js for unlimited depth; without script, only root has level 1 (or override --t-level manually). */
@@ -37,13 +254,51 @@
 .t-layout.t-layout-grow {
   flex: 1;
 }
+.t-layout.t-layout-grow-2 {
+  flex: 2;
+}
+.t-layout.t-layout-grow-3 {
+  flex: 3;
+}
+.t-layout.t-layout-grow-auto {
+  flex: 1 1 auto;
+}
 .t-layout.t-layout-shrink-0 {
   flex-shrink: 0;
+}
+.t-layout.t-layout-shrink {
+  flex-shrink: 1;
+}
+.t-layout.t-layout-scroll {
+  min-height: 0;
+  overflow: auto;
+}
+.t-layout.t-layout-fill {
+  min-height: 100%;
+}
+.t-layout.t-layout-min-h-screen {
+  min-height: 100vh;
+}
+.t-layout.t-layout-overflow-hidden {
+  overflow: hidden;
+}
+.t-layout.t-layout-overflow-x-auto {
+  overflow-x: auto;
+}
+.t-layout.t-layout-overflow-y-auto {
+  overflow-y: auto;
+}
+.t-layout.t-layout-sticky {
+  position: sticky;
+  top: 0;
 }
 
 /* Wrap (use with .t-layout.row) */
 .t-layout-wrap {
   flex-wrap: wrap;
+}
+.t-layout-wrap-reverse {
+  flex-wrap: wrap-reverse;
 }
 
 /* Alignment (set --t-justify / --t-align) */
@@ -54,7 +309,7 @@
 .t-layout-align-end { --t-align: flex-end; }
 
 /* Responsive: rows stack (column) on narrow viewport when opt-in class is on root */
-@media (max-width: 48rem) {
+@media (max-width: var(--ls-breakpoint)) {
   .t-layout-responsive .t-layout.row {
     flex-direction: column;
   }
@@ -92,6 +347,13 @@ html[dir="rtl"] .t-layout.row {
 .t-layout-justify-around { --t-justify: space-around; }
 .t-layout-align-start { --t-align: flex-start; }
 .t-layout-align-baseline { --t-align: baseline; }
+
+/* Align-self (use on children of .t-layout to override parent align-items) */
+.t-layout-self-center { align-self: center; }
+.t-layout-self-start { align-self: flex-start; }
+.t-layout-self-end { align-self: flex-end; }
+.t-layout-self-stretch { align-self: stretch; }
+.t-layout-self-baseline { align-self: baseline; }
 
 /* Order (use on flex children of .t-layout to reorder without changing DOM) */
 .t-layout-order-1 { order: 1; }

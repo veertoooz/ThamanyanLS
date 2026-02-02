@@ -9,8 +9,10 @@ npm install thamanyanls
 **In HTML:**
 
 ```html
-<link rel="stylesheet" href="node_modules/thamanyanls/dist/thamanyan.css">
+<script src="node_modules/thamanyanls/dist/thamanyan.js"></script>
 ```
+
+The script injects the layout styles and sets automatic nesting level on all `.t-layout` elements. Without it, only the root has level 1; you can override `--t-level` manually per layout.
 
 **With a bundler:**
 
@@ -18,9 +20,7 @@ npm install thamanyanls
 import 'thamanyanls';
 ```
 
-You can also copy `dist/thamanyan.css` into your project and link it directly.
-
-**Optional script (unlimited depth):** For automatic nesting level on all `.t-layout` elements, add `<script src=".../dist/thamanyan.js"></script>` after the CSS. Without it, only the root has level 1; you can override `--t-level` manually per layout.
+You can also copy `dist/thamanyan.js` into your project and load it directly.
 
 ---
 
@@ -57,11 +57,12 @@ Use both in a tree: e.g. app column → header row + main row → main row = sid
 
 - **Take remaining space:** add `t-layout-grow` to the layout that should expand (e.g. main content).
 - **Don’t shrink:** add `t-layout-shrink-0` to fixed-width areas (e.g. sidebar).
+- **Scrollable content:** add `t-layout-scroll` with `t-layout-grow` when the layout should scroll (e.g. long list).
 
 ```html
 <div class="t-layout row">
   <aside class="t-layout column t-layout-shrink-0">Sidebar</aside>
-  <main class="t-layout column t-layout-grow">Content</main>
+  <main class="t-layout column t-layout-grow t-layout-scroll">Content</main>
 </div>
 ```
 
@@ -69,12 +70,23 @@ Use both in a tree: e.g. app column → header row + main row → main row = sid
 
 ## Responsive (mobile)
 
-Add `t-layout-responsive` to the **root** layout. On viewports ≤ 48rem, every `t-layout row` inside that root becomes a column (stacks vertically).
+Add `t-layout-responsive` to the **root** layout. On viewports ≤ `--ls-breakpoint` (default 48rem), every `t-layout row` inside that root becomes a column (stacks vertically). Override: `:root { --ls-breakpoint: 40rem; }`.
 
 ```html
 <div class="t-layout column t-layout-responsive">
   <!-- rows here will stack on narrow screens -->
 </div>
+```
+
+---
+
+## SPA / dynamic content
+
+If you use React, Vue, or similar, layouts are often added after the initial load. Call `ThamanyanLS.init()` after DOM changes:
+
+```js
+// After mount or update
+ThamanyanLS?.init();
 ```
 
 ---

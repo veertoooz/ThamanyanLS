@@ -1,16 +1,12 @@
 {
   "name": "thamanyanls",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Context-aware layout system for deep interfaces",
-  "main": "dist/thamanyan.css",
-  "style": "dist/thamanyan.css",
+  "main": "dist/thamanyan.js",
+  "style": "dist/thamanyan.js",
   "unpkg": "dist/thamanyan.js",
   "exports": {
-    ".": {
-      "style": "./dist/thamanyan.css",
-      "default": "./dist/thamanyan.css"
-    },
-    "./dist/thamanyan.css": "./dist/thamanyan.css",
+    ".": "./dist/thamanyan.js",
     "./dist/thamanyan.js": "./dist/thamanyan.js"
   },
   "publishConfig": {
@@ -20,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "node -e \"const fs=require('fs'); fs.mkdirSync('dist',{recursive:true}); fs.copyFileSync('src/thamanyan.css','dist/thamanyan.css'); fs.copyFileSync('src/thamanyan.js','dist/thamanyan.js');\"",
+    "build": "node build.js",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

@@ -88,25 +88,60 @@ This is a deliberate constraint.
 
 ---
 
+## Token contract
+
+ThamanyanLS exposes a **fixed set of size-only CSS variables** for consumers (e.g. ParajanovCS). Consumers should rely only on these names and not on implementation details.
+
+**Public API (Option B):** One variable per kind; the value is set per depth context via class `.ls-d0` … `.ls-d5`.
+
+| Token | Description |
+|-------|-------------|
+| `--ls-space` | Base spacing unit (padding, gap) |
+| `--ls-gap` | Gap between items |
+| `--ls-padding` | Typical container padding |
+| `--ls-radius` | border-radius |
+| `--ls-text` | font-size |
+| `--ls-border` | border-width |
+
+**Depth:** Use classes `.ls-d0` (largest) through `.ls-d5` (smallest). **Max depth is 5**—do not rely on `.ls-d6` or deeper. Depth classes are applied automatically by the optional script, or add `ls-d0` … `ls-d5` manually.
+
+**Prefix:** Only `--ls-*` for these size tokens. ThamanyanLS does not define color variables (that is SaryanTS).
+
+**Root-controlled system:** All depth values are derived from `:root` variables. Override them on `:root` or `html` to tune the whole system (before or after loading thamanyan.js):
+
+| Root variable | Default | Description |
+|---------------|---------|-------------|
+| `--ls-base` | `1rem` | Base unit for space, gap, padding at depth 0. |
+| `--ls-breakpoint` | `48rem` | Responsive breakpoint for `t-layout-responsive`. |
+| `--ls-scale` | `0.85` | Scale factor per depth (d1 = base × scale, d2 = base × scale², …). |
+| `--ls-radius-ratio` | `0.375` | Radius at each depth = that depth’s space × this ratio. |
+| `--ls-text-ratio` | `1` | Text size at each depth = that depth’s space × this ratio. |
+| `--ls-border-ratio` | `0.0625` | Border at each depth = that depth’s space × this ratio (d0 ≈ 1px at 1rem base). |
+| `--ls-h1-ratio` | `1.5` | h1 font-size = --ls-text × this ratio inside depth. |
+| `--ls-h2-ratio` | `1.25` | h2 font-size = --ls-text × this ratio inside depth. |
+| `--ls-h3-ratio` | `1.125` | h3 font-size = --ls-text × this ratio inside depth. |
+| `--ls-h4-ratio` | `1.0625` | h4 font-size = --ls-text × this ratio inside depth. |
+| `--ls-h5-ratio` | `1` | h5 font-size = --ls-text × this ratio inside depth. |
+| `--ls-h6-ratio` | `0.9375` | h6 font-size = --ls-text × this ratio inside depth. |
+| `--ls-small-ratio` | `0.875` | small font-size = --ls-text × this ratio inside depth. |
+
+Inside any depth context (`.ls-d0` … `.ls-d5`), **all HTML5 content elements are relative by default** — headings, sections, lists, forms, tables, inline text, and embedded media. No classes or `var(--ls-text)` needed. See [docs/reference.md](docs/reference.md#html5-elements-inside-depth) for the full list.
+
+Example: `:root { --ls-base: 1.25rem; --ls-scale: 0.9; }` for a larger, gentler scale. You only load thamanyan.js; override in your own CSS if needed.
+
+---
+
 ## Installation
 
 ```bash
 npm install thamanyanls
 ```
 
-Then in your app:
-
-```html
-<link rel="stylesheet" href="node_modules/thamanyanls/dist/thamanyan.css">
-```
-
-For automatic level (unlimited depth), add the optional script after the CSS:
+Then in your app (single script injects styles and sets automatic level):
 
 ```html
 <script src="node_modules/thamanyanls/dist/thamanyan.js"></script>
 ```
-
-Without the script, only the root layout has level 1; nested layouts need manual `--t-level` override or the script.
 
 Or with a bundler:
 
@@ -114,7 +149,7 @@ Or with a bundler:
 import 'thamanyanls';
 ```
 
-You can also copy `dist/thamanyan.css` into your project.
+You can also copy `dist/thamanyan.js` into your project. Without the script, only the root layout has level 1; nested layouts need manual `--t-level` override.
 
 **Documentation:** See the [docs](docs/README.md) folder for full documentation (getting started, reference, examples).
 
@@ -140,7 +175,7 @@ Result:
 - Inner layout → tighter spacing
 - All automatic
 
-**Grow / shrink / wrap:** Use `t-layout-grow` on the layout that should take remaining space (e.g. main content), `t-layout-shrink-0` on fixed-width items (e.g. sidebar). Use `t-layout-wrap` on a row so items wrap on narrow space.
+**Grow / shrink / wrap / scroll:** Use `t-layout-grow` on the layout that should take remaining space (e.g. main content), `t-layout-shrink-0` on fixed-width items (e.g. sidebar), `t-layout-scroll` for scrollable flex children (e.g. long list). Use `t-layout-wrap` on a row so items wrap on narrow space.
 
 ```html
 <div class="t-layout row">
@@ -234,7 +269,7 @@ Gap is clamped so deep nesting does not make it too small and root does not exce
 
 **Responsive (mobile):**
 
-Add the class `t-layout-responsive` to your root layout (e.g. the outermost `.t-layout`). On narrow viewports (≤48rem), all `.t-layout.row` inside that root will automatically stack as columns. To change the breakpoint, edit the media query in the source and rebuild.
+Add the class `t-layout-responsive` to your root layout (e.g. the outermost `.t-layout`). On narrow viewports (≤`--ls-breakpoint`, default 48rem), all `.t-layout.row` inside that root will automatically stack as columns. Override the breakpoint: `:root { --ls-breakpoint: 40rem; }`.
 
 ```html
 <div class="t-layout column t-layout-responsive">
@@ -275,6 +310,10 @@ Layout uses `justify-content` and `align-items`. Set via CSS variables `--t-just
 ```
 
 **Order:** Use `t-layout-order-1` … `t-layout-order-5`, or `t-layout-order-first` / `t-layout-order-last` on **children** of a layout to change visual order without changing the DOM.
+
+**Reverse direction:** Use `t-layout-reverse` with `column` or `row` for `column-reverse` or `row-reverse` (e.g. chat with newest at bottom).
+
+**SPA / dynamic content:** When using React, Vue, or similar, call `ThamanyanLS.init()` after DOM changes so new layouts get correct levels.
 
 ```html
 <div class="t-layout row">
