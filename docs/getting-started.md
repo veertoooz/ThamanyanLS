@@ -126,4 +126,4 @@ ThamanyanLS?.init();
 ## Next steps
 
 - [Reference](reference.md) — all classes, variables, and data attributes.
-- [Examples](examples.md) — basic and dashboard examples.
+- [Examples](examples.md) — basic example and snippets.

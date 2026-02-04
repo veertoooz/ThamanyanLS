@@ -33,7 +33,7 @@ This document helps AI agents quickly understand the project: what it is, how it
 | `package.json` | `name`, `main`/`style`/`exports` → dist JS only, `files: ["dist"]`, `build` runs `node build.js`, `prepublishOnly` runs build. |
 | `README.md` | User-facing docs; npm displays it on the package page. |
 | `docs/` | Full documentation: getting-started, reference, examples. |
-| `examples/` | `basic.html`, `dashboard.html`, `tailwind-daisyui.html` — demos (single script only). |
+| `examples/` | `basic.html` — tag showcase and layout demos (single script only). |
 
 **Build:** `npm run build` runs `node build.js`, which inlines `src/thamanyan.css` into `src/thamanyan.js` and writes `dist/thamanyan.js`. No separate `dist/thamanyan.css`. No bundler, no minification by default.
 
@@ -68,7 +68,7 @@ This document helps AI agents quickly understand the project: what it is, how it
 
 - **CSS:** Edit only `src/thamanyan.css`. Add short comments for new blocks. Keep section order: base layout → modifiers (grow/shrink/scroll, wrap, reverse, alignment) → responsive media → RTL → print → opt-out (data attrs) → safe area → order utilities.
 - **Docs:** Update `README.md` (Configuration and/or Usage) and `docs/reference.md` (tables). Optionally `docs/getting-started.md` or `docs/examples.md` if the feature affects first steps or examples.
-- **Examples:** If the feature is user-facing, add usage to `examples/basic.html` or `examples/dashboard.html`.
+- **Examples:** If the feature is user-facing, add usage to `examples/basic.html`.
 - **Build:** After editing src, run `npm run build` to refresh `dist/thamanyan.js`.
 
 ---

@@ -1,6 +1,6 @@
 {
   "name": "thamanyanls",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Context-aware layout system for deep interfaces",
   "main": "dist/thamanyan.js",
   "style": "dist/thamanyan.js",

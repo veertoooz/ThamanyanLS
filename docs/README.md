@@ -10,7 +10,7 @@ Context-aware layout system for deep interfaces. Layout should reflect structure
 |----------|-------------|
 | [Getting started](getting-started.md) | Installation, first layout, quick concepts |
 | [Reference](reference.md) | Classes, CSS variables, data attributes |
-| [Examples](examples.md) | Basic and dashboard examples with code |
+| [Examples](examples.md) | Basic example and snippets |
 
 ---
 

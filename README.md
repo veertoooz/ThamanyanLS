@@ -15,6 +15,8 @@ It is intended for interfaces where layouts are deep, multi-layered, and structu
 ThamanyanLS is not a framework and not a UI library.  
 It is layout logic: minimal, predictable, and framework-agnostic.
 
+**Ecosystem:** ThamanyanLS · SaryanTS · ParajanovCS · Dodo. ParajanovCS consumes `--ls-*` tokens for UI components.
+
 ---
 
 ## The problem it solves
@@ -63,7 +65,7 @@ Spacing is computed automatically using **CSS Custom Properties** only.
 - Works with infinite nesting (optional JS for automatic level)
 - Optional JavaScript for automatic level (unlimited depth); without script, only root has level 1 or override `--t-level` manually
 - Framework-agnostic
-- Works alongside Tailwind and daisyUI
+- Works with Tailwind, daisyUI, ParajanovCS, or plain CSS — no conflicts
 
 ---
 
@@ -71,7 +73,6 @@ Spacing is computed automatically using **CSS Custom Properties** only.
 
 - Does not provide UI components
 - Does not manage colors or typography
-- Does not replace Tailwind or daisyUI
 - Does not enforce design decisions
 
 ThamanyanLS deals only with **layout logic**.
@@ -220,24 +221,6 @@ CSS inheritance does the rest.
 
 ---
 
-## Tailwind & daisyUI integration
-
-ThamanyanLS is designed to work with:
-
-- Next.js
-- Tailwind CSS
-- daisyUI
-
-**Recommended separation:**
-
-- Tailwind → utilities
-- daisyUI → component look
-- ThamanyanLS → layout structure
-
-They do not conflict.
-
----
-
 ## Configuration (optional)
 
 **Override base spacing:**
@@ -248,90 +231,17 @@ They do not conflict.
 }
 ```
 
-**Gap bounds (min/max):**
+**Gap bounds (min/max):** Override `--t-gap-min` (default `0.25rem`) and `--t-gap-max` (default `1rem`).
 
-Gap is clamped so deep nesting does not make it too small and root does not exceed a max. Override with `--t-gap-min` (default `0.25rem`) and `--t-gap-max` (default `1rem`).
+**Override level manually:** `style="--t-level: 1"` on a layout.
 
-```css
-.t-layout {
-  --t-gap-min: 0.5rem;
-  --t-gap-max: 1.5rem;
-}
-```
+**Disable automatic spacing:** Add `data-manual` to opt out of gap/padding.
 
-**Override level manually:**
+**Responsive:** Default. Rows stack on narrow viewport (≤`--ls-breakpoint`). Add `data-t-no-responsive` to keep a row horizontal (e.g. navbar).
 
-```html
-<div class="t-layout" style="--t-level: 1">
-```
+**SPA / dynamic content:** Call `ThamanyanLS.init()` after DOM changes.
 
-**Disable automatic spacing (opt-out):**
-
-```html
-<div class="t-layout" data-manual>
-```
-
-```css
-.t-layout[data-manual] {
-  gap: unset;
-  padding: unset;
-}
-```
-
-**Responsive (mobile):**
-
-Responsive behavior is default. On narrow viewports (≤`--ls-breakpoint`, default 48rem), all `.t-layout.row` stack as columns. To keep a row horizontal (e.g. navbar), add `data-t-no-responsive`. Override the breakpoint: `:root { --ls-breakpoint: var(--ls-breakpoint-sm); }`. For show/hide at breakpoints, use `t-below-sm-hide`, `t-above-md-show`, `t-above-md-hide`, and similar utilities.
-
-```html
-<div class="t-layout column">
-  ...
-</div>
-```
-
-**Alignment:**
-
-Layout uses `justify-content` and `align-items`. Set via CSS variables `--t-justify` (default `flex-start`) and `--t-align` (default `stretch`), or use classes on the layout element:
-
-- Justify: `t-layout-justify-end`, `t-layout-justify-center`, `t-layout-justify-between`, `t-layout-justify-around`
-- Align: `t-layout-align-center`, `t-layout-align-end`, `t-layout-align-start`, `t-layout-align-baseline`
-
-```html
-<div class="t-layout row t-layout-justify-between">...</div>
-<div class="t-layout column t-layout-align-center">...</div>
-```
-
-**RTL:** When the document has `dir="rtl"` on `html`, `.t-layout.row` automatically uses `row-reverse`. No extra class needed.
-
-**Print stack:** Add `t-layout-print-stack` to your root layout so all rows stack as columns when printing.
-
-```html
-<div class="t-layout column t-layout-print-stack">...</div>
-```
-
-**Gap-only or padding-only:** Use `data-t-no-padding` on a layout for gap but no padding; use `data-t-no-gap` for padding but no gap. **Gap override:** Use `t-layout-gap-none`, `t-layout-gap-tight` (0.5×), or `t-layout-gap-loose` (1.5×) to override default gap. **Padding override:** Use `t-layout-padding-none`, `t-layout-padding-tight`, or `t-layout-padding-loose` similarly. **Width utilities:** Use `t-min-w-0` for flex row overflow fix (truncate/scroll); `t-min-h-0` for flex column overflow fix; `t-w-full` to fill parent width. Use `t-overflow-hidden` or `t-overflow-auto` for standalone overflow control.
-
-```html
-<div class="t-layout row" data-t-no-padding>...</div>
-```
-
-**Safe area:** Add `t-layout-safe-area` on the root layout to add `env(safe-area-inset-*)` to padding (for notched devices / home indicator).
-
-```html
-<div class="t-layout column t-layout-safe-area">...</div>
-```
-
-**Order:** Use `t-layout-order-1` … `t-layout-order-5`, or `t-layout-order-first` / `t-layout-order-last` on **children** of a layout to change visual order without changing the DOM.
-
-**Reverse direction:** Use `t-layout-reverse` with `column` or `row` for `column-reverse` or `row-reverse` (e.g. chat with newest at bottom).
-
-**SPA / dynamic content:** When using React, Vue, or similar, call `ThamanyanLS.init()` after DOM changes so new layouts get correct levels.
-
-```html
-<div class="t-layout row">
-  <span class="t-layout-order-last">Shown last</span>
-  <span class="t-layout-order-first">Shown first</span>
-</div>
-```
+For alignment, RTL, print stack, safe area, order, reverse, gap/padding overrides, and breakpoint utilities, see [docs/reference.md](docs/reference.md).
 
 ---
 
@@ -367,17 +277,7 @@ ThamanyanLS turns spacing into a reflection of information hierarchy.
 
 ## Publishing
 
-Before publishing to npm:
-
-1. **Name:** If `thamanyanls` is taken, switch to a scoped name (e.g. `@veertoooz/thamanyanls`) and ensure `publishConfig.access` is `"public"`.
-2. **Auth:** Run `npm login` (or confirm with `npm whoami`).
-3. **Version:** Bump if needed: `npm version patch|minor|major` or edit `version` in package.json.
-4. **Dry run:** Run `npm pack` and inspect the generated `.tgz` (should contain package.json, README, LICENSE, and `dist/`).
-
-Then publish:
-
-- Unscoped: `npm publish`
-- Scoped: `npm publish --access public` (or rely on `publishConfig.access` in package.json)
+`npm run build` then `npm publish`. For scoped packages use `--access public`. See package.json `files` and `publishConfig`.
 
 ---
 
